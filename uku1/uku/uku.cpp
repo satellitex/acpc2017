@@ -6,14 +6,16 @@ using namespace std;
 
 #define MAX_N 100000
 
-int N;
-vector<int> x;
-vector<int> graph[MAX_N];
+using ll = long long;
 
-int dp[2][MAX_N];
+int N;
+vector<ll> x;
+vector<ll> graph[MAX_N];
+
+ll dp[2][MAX_N];
 // dp[0][u]:=uを含む安定集合の最大重み和
 // dp[1][u]:=uを含まない安定集合の最大重み和
-int ans[2][MAX_N];
+ll ans[2][MAX_N];
 
 void dfs(int u, int p) {
   for(int v : graph[u]) {
@@ -30,7 +32,7 @@ void dfs(int u, int p) {
   }
 }
 
-void dfs2(int u, int p, int X, int Y) {
+void dfs2(int u, int p, ll X, ll Y) {
   ans[0][u] = dp[0][u]+max(X, Y);
   ans[1][u] = dp[1][u]+X;
   for(int v : graph[u]) {
