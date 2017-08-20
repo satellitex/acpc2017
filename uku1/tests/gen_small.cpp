@@ -3,14 +3,14 @@
 
 using namespace std;
 
-#define CASE_NUM 1
+#define CASE_NUM 10
 
-const int MAX_N = 10;
-const int MAX_X = 10;
+const int MAX_N = 100;
+const int MAX_X = 100;
 
 void start(int id) {
-  ofstream out(format("00_small_%02d.in", id).c_str());
-  int N = MAX_N;//rnd.next(1, MAX_N);
+  ofstream out(format("01_small_%02d.in", id).c_str());
+  int N = rnd.next(1, MAX_N);
   out << N << endl;
   for(int i = 0; i < N; i++) {
     if(i) out << " ";
