@@ -1,10 +1,14 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
+#include <utility>
 
 using namespace std;
 
 const int inf = 1<<25;
+
+using Pi = pair<int, int>;
 
 struct edge {
   int to, cap, cost, rev;
@@ -17,8 +21,8 @@ using Graph = vector< vector<edge> >;
 
 struct SSSP {
   Graph graph;
-  vector<int> mincost, prevv, preve;
-  SSSP(int V):graph(V), mincost(V), prevv(V), preve(V){}
+  vector<int> mincost, prevv, preve, h;
+  SSSP(int V):graph(V), mincost(V), prevv(V), preve(V), h(V){}
   void add_edge(int from, int to, int cap, int cost) {
     graph[from].emplace_back(to, cap, cost, graph[to].size());
     graph[to].emplace_back(from, 0, -cost, graph[from].size()-1);
@@ -26,33 +30,42 @@ struct SSSP {
   int min_cost_flow(int s, int t, int f) {
     int V = graph.size();
     int res = 0;
+    fill(h.begin(), h.end(), 0);
+    for(int v = 0; v < V; v++) {
+      for(int i = 0; i < (int)graph[v].size(); i++) {
+	edge& e = graph[v][i];
+	if(e.cap > 0) {
+	  h[e.to] = min(h[e.to], h[v]+e.cost);
+	}
+      }
+    }
     while(f > 0) {
+      priority_queue<Pi, vector<Pi>, greater<Pi> > que;
       fill(mincost.begin(), mincost.end(), inf);
-      fill(prevv.begin(), prevv.end(), -1);
-      fill(preve.begin(), preve.end(), -1);
       mincost[s] = 0;
-      bool update = true;
-      while(update) {
-	update = false;
-	for(int v = 0; v < V; v++) {
-	  if(mincost[v] == inf) continue;
-	  for(int i = 0; i < (int)graph[v].size(); i++) {
-	    edge& e = graph[v][i];
-	    if(e.cap > 0 && mincost[e.to] > mincost[v]+e.cost) {
-	      mincost[e.to] = mincost[v] + e.cost;
-	      prevv[e.to] = v; preve[e.to] = i;
-	      update = true;
-	    }
+      que.emplace(0, s);
+      while(!que.empty()) {
+	Pi p = que.top(); que.pop();
+	int v = p.second;
+	if(mincost[v] < p.first) continue;
+	for(int i = 0; i < (int)graph[v].size(); i++) {
+	  edge& e = graph[v][i];
+	  int cost = mincost[v]+e.cost+h[v]-h[e.to];
+	  if(e.cap > 0 && cost < mincost[e.to]) {
+	    mincost[e.to] = cost;
+	    prevv[e.to] = v; preve[e.to] = i;
+	    que.emplace(cost, e.to);
 	  }
 	}
       }
       if(mincost[t] == inf) return inf;
+      for(int v = 0; v < V; v++) h[v] += mincost[v];
       int d = f;
       for(int v = t; v != s; v = prevv[v]) {
 	d = min(d, graph[prevv[v]][preve[v]].cap);
       }
       f -= d;
-      res += d*mincost[t];
+      res += d*h[t];
       for(int v = t; v != s; v = prevv[v]) {
 	edge& e = graph[prevv[v]][preve[v]];
 	e.cap -= d;

@@ -8,5 +8,5 @@
 problem(title = "",
         id = "X",
         time_limit = 2.0,
-        reference_solution='uku'
+        reference_solution='uku_sssp'
 )
