@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 #include "testlib.h"
 
 using namespace std;
@@ -19,7 +22,7 @@ void start(int id) {
     if(i%10==3&&rnd.next(0,seed)%2) for(int j=0;j<M;j++){
       int point=rnd.next(0,seed)%(int)v.size();
       out<<v[point]<<endl;
-      v.erase(v.begin()+point);
+      //v.erase(v.begin()+point);
     }
 
     else {
@@ -29,7 +32,8 @@ void start(int id) {
          out << c ;
          t+=c;
        }
-       v.push_back(reverse(t.begin(),t.end()));
+       reverse(t.begin(),t.end());
+       v.push_back(t);
        cout<<endl;
      }
   }
