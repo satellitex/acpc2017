@@ -5,9 +5,9 @@ string s[501];
 bool b[501];
 vector<P>v;
 vector<string>a;
-int n;
+int n,m;
 main(){
-  cin>>n>>n;
+  cin>>n>>m;
   for(int i=0;i<n;i++)cin>>s[i];
 
   for(int i=0;i<n;i++)if(!b[i]){
