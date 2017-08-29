@@ -31,9 +31,9 @@ void start(int id) {
         char c=rnd.next(0, MAX_M)+'a';
          t+=c;
        }
+       out<<t<<endl;
        reverse(t.begin(),t.end());
        v.push_back(t);
-       out<<t<<endl;
      }
   }
 }
