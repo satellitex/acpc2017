@@ -19,7 +19,7 @@ void start(int id) {
   out << N << " " << M << endl;
   for(int i = 0; i < N; i++) {
 
-    if(i%10==3&&rnd.next(0,seed)%2){
+    if(i%10==3){
       int point=rnd.next(0,seed)%(int)v.size();
       out<<v[point]<<endl;
       //v.erase(v.begin()+point);
