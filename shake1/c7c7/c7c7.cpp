@@ -2,11 +2,11 @@
 using namespace std;
 #define int long long
 int n;
-main{
+main(){
 	while(cin>>n,n){
-		for(int i=1;i<n;i*=2){
+		for(int i=0;(1<<i)<n;i++){
 			if(!((1<<i)&n)){
-				cout<<i<<endl;
+				cout<<i+1<<endl;
 				goto L;
 			}
 		}
