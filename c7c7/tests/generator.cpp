@@ -8,7 +8,7 @@ using namespace std;
 
 #define CASE_NUM 20
 
-const int MAX_M = 26 ;
+const int MAX_M = 25 ;
 const int N =1000 ;
 const int seed =1000000007;
 
@@ -19,7 +19,7 @@ void start(int id) {
   out << N << " " << M << endl;
   for(int i = 0; i < N; i++) {
 
-    if(i%10==3&&rnd.next(0,seed)%2) for(int j=0;j<M;j++){
+    if(i%10==3&&rnd.next(0,seed)%2){
       int point=rnd.next(0,seed)%(int)v.size();
       out<<v[point]<<endl;
       //v.erase(v.begin()+point);
