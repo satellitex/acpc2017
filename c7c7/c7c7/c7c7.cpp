@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef pair<string,string> P;
-string s[501];
-bool b[501];
+string s[1001];
+bool b[1001];
 vector<P>v;
 vector<string>a;
 int n,m;
@@ -14,7 +14,7 @@ main(){
     reverse(s[i].begin(),s[i].end());
 
     for(int j=i+1;j<n;j++)if(!b[j]&&s[j]==s[i]){
-      reverse(s[i].begin(),s[i].end());
+      reverse(s[j].begin(),s[j].end());
       v.push_back(P(s[i],s[j]));
       b[j]=b[i]=1;
       break;
