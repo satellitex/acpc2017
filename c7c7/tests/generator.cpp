@@ -29,12 +29,11 @@ void start(int id) {
       string t="";
       for(int j = 0; j < M ; j++){
         char c=rnd.next(0, MAX_M)+'a';
-         out << c ;
          t+=c;
        }
        reverse(t.begin(),t.end());
        v.push_back(t);
-       cout<<endl;
+       out<<t<<endl;
      }
   }
 }
