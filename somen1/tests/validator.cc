@@ -12,7 +12,7 @@ void input(){
   N = inf.readInt(N_MIN,N_MAX,"N");
   inf.readEoln();
   for(int i=0;i<N;i++){
-    Theta = inf.readInt(X_MIN,X_MAX,format("X[%d]",i));
+    X[i] = inf.readInt(X_MIN,X_MAX,format("X[%d]",i));
     inf.readEoln();
   }
   inf.readEof();
