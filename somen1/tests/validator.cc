@@ -4,7 +4,7 @@ using namespace std;
 const int N_MIN = 1;
 const int N_MAX = 1000;
 const int X_MIN = 0;
-const int X_MAX = 360;
+const int X_MAX = 359;
 
 int N;
 int X[N_MAX];
