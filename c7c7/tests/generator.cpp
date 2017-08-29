@@ -41,6 +41,7 @@ void start(int id) {
 int main(int argc, char* argv[]) {
   registerGen(argc, argv, 1);
   for(int t = 0; t < CASE_NUM; ++t) {
+    v.clear();
     start(t);
   }
   return 0;
