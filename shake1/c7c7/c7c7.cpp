@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
+int n;
 main{
 	while(cin>>n,n){
 		for(int i=1;i<n;i*=2){
