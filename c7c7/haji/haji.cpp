@@ -9,29 +9,30 @@ const double PI = 6.0 * asin(0.5);
 template<class T> T Max(T &a,T b){return a=max(a,b);}
 template<class T> T Min(T &a,T b){return a=min(a,b);}
 
-bool isPalindrome(string str){
-  string rstr = str; reverse(rstr.begin(),rstr.end());
-  return str == rstr;
-}
+string rev(string str){reverse(str.begin(),str.end());return str;}
+bool isPalindrome(string str){return str == rev(str);}
 
 signed main(){
   int n,m;
   cin>>n>>m;
   
-  int ans = 0;
   map<string,int> M;
-  
+  vector<string> parts; 
   for(int i=0;i<n;i++){
     string str;
     cin>>str;
-    string rstr = str;reverse(rstr.begin(),rstr.end());
-    
-    if(M[rstr]) ans+=2, M[rstr]--;
+    string rstr = rev(str);
+    if(M[rstr]) M[rstr]--,parts.push_back(min(str,rstr));
     else M[str]++;
   }
+  sort(parts.begin(),parts.end());
+  
+  string med;
+  for(pair<string,int> p:M) if(med == "" && p.second>0 && isPalindrome(p.first)) med = p.first;
 
-  int ok = 0;
-  for(pair<string,int> p:M) ok |= (p.second!=0) && isPalindrome(p.first);
-  cout<<ans+ok<<endl;
+  string ans;  
+  for(string s:parts) ans += s;
+  ans = ans + med + rev(ans);
+  cout<<ans<<endl;
   return 0;
 }
