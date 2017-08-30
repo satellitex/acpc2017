@@ -4,9 +4,9 @@ using namespace std;
 int n;
 main(){
 	cin>>n;
-	for(int i=0;(1<<i)<n;i++){
-		if(!((1<<i)&n)){
-			cout<<(1<<i)<<endl;
+	for(int i=0;((int)1<<i)<n;i++){
+		if(!(((int)1<<i)&n)){
+			cout<<((int)1<<i)<<endl;
 			return 0;
 		}
 	}
