@@ -5,10 +5,7 @@ int main(){
   cin>>n;
   n++;
   while(n%2==0)n/=2,cnt++;
-  if(n==1)cout<<-1<<endl;
-  else{
-    n=pow(2,cnt);
-    cout<<n<<endl;
-  }
+  n=(n==1?-1:pow(2,cnt));
+  cout<<n<<endl;
   return 0;
 }
