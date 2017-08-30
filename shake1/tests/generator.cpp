@@ -6,7 +6,7 @@ using namespace std;
 #define CASE_NUM 10
 
 const long long MIN_N = 1LL;
-const long long MAX_N = (1LL<<63LL-1LL);
+const long long MAX_N = 1e18*1LL;
 
 void start(int id) {
   ofstream out(format("50_random_%02d.in", id).c_str());

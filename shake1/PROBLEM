@@ -8,5 +8,5 @@
 problem(title = "nCm",
         id = "X",
         time_limit = 1.0,
-        #reference_solution='shake'
+        reference_solution='shake'
 )

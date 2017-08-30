@@ -5,7 +5,7 @@
 using namespace std;
 
 const long long MIN_N = 1LL;
-const long long MAX_N = (1LL<<63LL-1LL);
+const long long MAX_N = 1e18*1LL;
 
 long long N;
 
