@@ -79,6 +79,7 @@ int main() {
 
   int s = N+M*2, t = s+1, V = t+1;
   SSSP graph(V);
+
   for(int i = 0; i < N; i++) {
     graph.add_edge(s, i, 1, 0);
     for(int j = 0; j < M; j++) {
@@ -93,7 +94,8 @@ int main() {
     graph.add_edge(N+i, N+M+i, 1, -b[i]);
   }
 
-  cout << -graph.min_cost_flow(s, t, N) << endl;
+  int mincost = graph.min_cost_flow(s, t, N);
+  cout << -mincost << endl;
 
   return 0;
 }
