@@ -53,8 +53,7 @@ int main() {
       rep(i,m) {
         if(!(t&(1<<i))) continue;
         rep(j,m) {
-          if(t&(1<<j)) continue;
-          d[t|(1<<j)][k][j]=min(d[t|(1<<j)][k][j],d[t][k][i]+D(b[i],b[j]));
+          if(!(t&(1<<j))) d[t|(1<<j)][k][j]=min(d[t|(1<<j)][k][j],d[t][k][i]+D(b[i],b[j]));
         }
       }
     }
