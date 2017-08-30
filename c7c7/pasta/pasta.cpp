@@ -14,6 +14,6 @@ main(){
   sort(V.begin(),V.end());
   for(auto& a:V)cout<<a,reverse(a.begin(),a.end());
   for(sort(W.begin(),W.end());j<W.size()&&W[j]==W[j+1];j+=2);
-  for(W.size()&&cout<<W[j],j=V.size();j--!=0;)cout<<V[j];
+  for(j<W.size()&&cout<<W[j],j=V.size();j--!=0;)cout<<V[j];
   puts("");
 }
