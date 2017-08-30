@@ -60,9 +60,13 @@ int main() {
     }
   }
   n*=2;
-  double l=0,r=10000;
-  rep(t,40) {
-    double mid=(l+r)/2;
+  vector<double> e;
+  rep(i,n/2)rep(j,n/2)rep(k,m)rep(l,m)rep(s,2)rep(t,2)e.push_back(D(a[i][s],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][t]));
+  sort(e.begin(),e.end());
+  e.erase(unique(e.begin(),e.end()),e.end());
+  int l=-1,r=e.size()-1;
+  while(l+1<r) {
+    int mid=(l+r)/2;
     vector<P> v;
     rep(i,n/2) {
       rep(j,n/2) {
@@ -76,15 +80,15 @@ int main() {
             c[3]=min(c[3],D(a[i][1],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][1]));
           }
         }
-        if(c[0]>mid) v.push_back(P(i,j));
-        if(c[1]>mid) v.push_back(P(rev(i),j));
-        if(c[2]>mid) v.push_back(P(i,rev(j)));
-        if(c[3]>mid) v.push_back(P(rev(i),rev(j)));
+        if(c[0]>e[mid]) v.push_back(P(i,j));
+        if(c[1]>e[mid]) v.push_back(P(rev(i),j));
+        if(c[2]>e[mid]) v.push_back(P(i,rev(j)));
+        if(c[3]>e[mid]) v.push_back(P(rev(i),rev(j)));
       }
     }
     if(two_sat(v)) r=mid;
     else l=mid;
   }
-  printf("%.10f\n",l);
+  printf("%.10f\n",e[r]);
   return 0;
 }
