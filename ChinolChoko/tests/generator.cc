@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
   registerGen(argc, argv);
   for(int t=0; t<30; t++) {
     ofstream ofs(format("03_random_%02d.in",t).c_str());
-    int n=rnd.next(1,N),m=rnd.next(1,M);
+    int n=rnd.next(2,N),m=rnd.next(1,M);
     ofs << n << " " << m << endl;
     for(int i=0; i<n; i++) {
       for(int j=0; j<4; j++) {

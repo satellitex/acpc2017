@@ -6,7 +6,7 @@ typedef pair<int,int> P;
 ll N=50,M=15;
 int main() {
   registerValidation();
-  int n=inf.readInt(1, N, "n");
+  int n=inf.readInt(2, N, "n");
   inf.readSpace();
   int m=inf.readInt(1, M, "m");
   inf.readEoln();

@@ -153,7 +153,7 @@ signed main(){
 
   vector<dat> A;
   for(int i=0;i<n;i++)
-    for(int j=i;j<n;j++){
+    for(int j=i+1;j<n;j++){
       for(int k=0;k<2;k++)
         for(int l=0;l<2;l++){
           if(i == j && k != l) continue;

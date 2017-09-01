@@ -60,11 +60,11 @@ int main() {
   }
   n*=2;
   double l=0,r=10000;
-  rep(t,40) {
+  rep(t,50) {
     double mid=(l+r)/2;
     vector<P> v;
     rep(i,n/2) {
-      rep(j,n/2) {
+      REP(j,i+1,n/2) {
         double c[4];
         rep(k,4) c[k]=1<<30;
         rep(k,m) {
