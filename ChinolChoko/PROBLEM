@@ -8,5 +8,5 @@
 problem(title = "Chinol Choko",
         id = "K",
         time_limit = 10.0,
-        reference_solution='kzyKT'
+        reference_solution='kzyKT2'
 )
