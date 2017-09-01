@@ -8,5 +8,5 @@
 problem(title = "the_NEET",
         id = "Y",
         time_limit = 1.0,
-        #reference_solution='Lapinpon'
+        reference_solution='Lapinpon'
 )
