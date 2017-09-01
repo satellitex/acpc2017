@@ -5,7 +5,7 @@ using namespace std;
 
 #define CASE_NUM 30
 
-const int MAX_n = 10;
+const int MAX_n = 100;
 const int MAX_m = 12;
 const int MAX_d = 30;
 const int MAX_v = 360;
