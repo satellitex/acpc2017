@@ -5,7 +5,7 @@ using namespace std;
 
 #define CASE_NUM 10
 
-const int MAX_N = 5;
+const int MAX_N = 8;
 const int MAX_A = 15;
 
 void start(int id) {

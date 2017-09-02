@@ -33,12 +33,10 @@ int main(void){
     int prev = EQ;
     for(int i = 0; i < N-1; i++){
         if(a[i+1] == a[i]){
-            ans = max(ans, local+1);
-            local = 1;
-            prev = EQ;
         }else if(a[i+1] > a[i]){
             if(prev == UP){
                 local++;
+                ans = max(ans, local+1);
             }else{
                 ans = max(ans, local+1);
                 local = 1;
@@ -47,12 +45,14 @@ int main(void){
         }else{
             if(prev == DOWN){
                 local++;
+                ans = max(ans, local+1);
             }else{
                 ans = max(ans, local+1);
                 local = 1;
             }
             prev = DOWN;
         }
+        //cout << a[i] << " " << local << endl;
     }
 
     cout << ans << endl;
