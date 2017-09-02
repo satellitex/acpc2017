@@ -8,5 +8,5 @@
 problem(title = "piano",
         id = "D",
         time_limit = 1.0,
-        #reference_solution='rollman'
+        reference_solution='rollman_TLE1_DP'
 )
