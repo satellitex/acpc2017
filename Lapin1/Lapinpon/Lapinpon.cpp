@@ -22,7 +22,6 @@ int main(){
   }
   int md=1001;
   for(int i=0;i<360;i++) md=min(md,day[i]);
-  cout<<md<<endl;
   for(int i=0;i<360;i++) if(day[i]==md) cout<<i/30+1<<" "<<i%30+1<<endl;
   
   return 0;
