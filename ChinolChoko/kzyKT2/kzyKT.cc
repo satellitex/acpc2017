@@ -59,9 +59,16 @@ int main() {
       }
     }
   }
+  double c[n][n][4];
   n*=2;
   vector<double> e;
-  rep(i,n/2)rep(j,n/2)rep(k,m)rep(l,m)rep(s,2)rep(t,2)e.push_back(D(a[i][s],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][t]));
+  rep(i,n/2) {
+    REP(j,i+1,n/2) {
+      rep(k,4) c[i][j][k]=1<<30;
+      rep(k,m)rep(l,m)rep(s,2)rep(t,2)c[i][j][s+t*2]=min(c[i][j][s+t*2],D(a[i][s],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][t]));
+      rep(k,4) e.push_back(c[i][j][k]);
+    }
+  }
   sort(e.begin(),e.end());
   e.erase(unique(e.begin(),e.end()),e.end());
   int l=-1,r=e.size()-1;
@@ -70,20 +77,10 @@ int main() {
     vector<P> v;
     rep(i,n/2) {
       REP(j,i+1,n/2) {
-        double c[4];
-        rep(k,4) c[k]=1<<30;
-        rep(k,m) {
-          rep(l,m) {
-            c[0]=min(c[0],D(a[i][0],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][0]));
-            c[1]=min(c[1],D(a[i][1],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][0]));
-            c[2]=min(c[2],D(a[i][0],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][1]));
-            c[3]=min(c[3],D(a[i][1],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][1]));
-          }
-        }
-        if(c[0]>e[mid]) v.push_back(P(i,j));
-        if(c[1]>e[mid]) v.push_back(P(rev(i),j));
-        if(c[2]>e[mid]) v.push_back(P(i,rev(j)));
-        if(c[3]>e[mid]) v.push_back(P(rev(i),rev(j)));
+        if(c[i][j][0]>e[mid]) v.push_back(P(i,j));
+        if(c[i][j][1]>e[mid]) v.push_back(P(rev(i),j));
+        if(c[i][j][2]>e[mid]) v.push_back(P(i,rev(j)));
+        if(c[i][j][3]>e[mid]) v.push_back(P(rev(i),rev(j)));
       }
     }
     if(two_sat(v)) r=mid;
