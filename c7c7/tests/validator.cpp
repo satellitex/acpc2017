@@ -14,4 +14,5 @@ int main() {
 		}
 		if(s.size()!=M)exit(1);
 	}
+	if(scanf("%d",&N)!=EOF)exit(1);
 }
