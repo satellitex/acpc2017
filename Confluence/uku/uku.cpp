@@ -22,14 +22,14 @@ using Graph = vector<vector<edge>>;
 using Pi = pair<int, int>;
 
 int N, M, T, Q;
-Graph graph, tree;
+Graph graph, dag;
 
 // build shortest path tree by Dijkstra
-vector<int> dist, prevv, preve;
-void buildShortestPathTree() {
+vector<int> dist;
+vector<vector<Pi>> par;
+void buildShortestPathDAG() {
   dist.resize(N, inf);
-  prevv.resize(N, -1);
-  preve.resize(N, -1);
+  par.resize(N);
   dist[T] = 0;
   priority_queue<Pi, vector<Pi>, greater<Pi> > que;
   que.emplace(0, T);
@@ -41,58 +41,51 @@ void buildShortestPathTree() {
       edge& e = graph[v][i];
       if(e.cost+dist[v] < dist[e.to]) {
 	dist[e.to] = e.cost+dist[v];
-	prevv[e.to] = v; preve[e.to] = i;
+	par[e.to].clear();
+	par[e.to].emplace_back(v, i);
 	que.emplace(dist[e.to], e.to);
       } else if(e.cost+dist[v] == dist[e.to]) {
-	if(e.cost < graph[prevv[e.to]][preve[e.to]].cost) {
-	  prevv[e.to] = v; preve[e.to] = i;
-	}
+	par[e.to].emplace_back(v, i);
       }
     }
   }
 
-  tree.resize(N);
+  dag.resize(N);
   for(int v = 0; v < N; v++) {
-    if(v == T) continue;
-    tree[prevv[v]].emplace_back(graph[prevv[v]][preve[v]]);
-  }
-}
-
-// LCA
-vector<vector<int>> parent;
-vector<int> depth;
-int logN;
-void dfs(int u, int p, int d) {
-  parent[0][u] = p;
-  depth[u] = d;
-  for(edge& e : tree[u]) {
-    if(e.to != p) dfs(e.to, u, d+1);
-  }
-}
-void initLCA() {
-  logN = 1;
-  while((1<<logN) <= N) logN++;
-  parent.resize(logN, vector<int>(N, -1));
-  depth.resize(N);
-
-  dfs(T, -1, 0);
-  for(int i = 0; i+1 < logN; i++) {
-    for(int v = 0; v < (int)parent.size(); v++) {
-      if(parent[i][v] < 0) parent[i+1][v] = -1;
-      else parent[i+1][v] = parent[i][parent[i][v]];
+    for(Pi& p : par[v]) {
+      int cost = graph[p.first][p.second].cost;
+      dag[v].emplace_back(p.first, cost);
     }
   }
 }
+
+vector<int> dijkstra(int s) {
+  vector<int> res(N, inf);
+  res[s] = 0;
+  priority_queue<Pi, vector<Pi>, greater<Pi> > que;
+  que.emplace(0, s);
+  while(!que.empty()) {
+    Pi p = que.top(); que.pop();
+    int v = p.second;
+    if(res[v] < p.first) continue;
+    for(edge& e : dag[v]) {
+      if(e.cost+res[v] < res[e.to]) {
+	res[e.to] = e.cost+res[v];
+	que.emplace(res[e.to], e.to);
+      }
+    }
+  }
+  return res;
+}
+
 int getLCA(int u, int v) {
-  if(depth[u] > depth[v]) swap(u, v);
-  for(int i = 0; i < logN; i++) {
-    if((depth[v]-depth[u])>>i & 1) v = parent[i][v];
+  vector<int> d1 = dijkstra(u);
+  vector<int> d2 = dijkstra(v);
+  int lca = 0;
+  for(int i = 0; i < N; i++) {
+    if(d1[i]+d2[i] < d1[lca]+d2[lca]) lca = i;
   }
-  if(u == v) return u;
-  for(int i = logN-1; i >= 0; i--) {
-    if(parent[i][u] != parent[i][v]) u = parent[i][u], v = parent[i][v];
-  }
-  return parent[0][u];
+  return lca;
 }
 
 int main() {
@@ -106,8 +99,7 @@ int main() {
     graph[a].emplace_back(b, c);
     graph[b].emplace_back(a, c);
   }
-  buildShortestPathTree();
-  initLCA();
+  buildShortestPathDAG();
   cin >> Q;
   for(int i = 0; i < Q; i++) {
     int u, v;
