@@ -63,14 +63,7 @@ int main() {
   rep(i,n/2) {
     REP(j,i+1,n/2) {
       rep(k,4) c[i][j][k]=1<<30;
-      rep(k,m) {
-        rep(l,m) {
-          c[i][j][0]=min(c[i][j][0],D(a[i][0],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][0]));
-          c[i][j][1]=min(c[i][j][1],D(a[i][1],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][0]));
-          c[i][j][2]=min(c[i][j][2],D(a[i][0],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][1]));
-          c[i][j][3]=min(c[i][j][3],D(a[i][1],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][1]));
-        }
-      }
+      rep(k,m)rep(l,m)rep(s,2)rep(t,2)c[i][j][s+t*2]=min(c[i][j][s+t*2],D(a[i][s],b[k])+d[(1<<m)-1][k][l]+D(b[l],a[j][t]));
     }
   }
   double l=0,r=10000;
