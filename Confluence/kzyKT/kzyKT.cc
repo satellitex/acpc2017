@@ -28,6 +28,7 @@ int main() {
       if(d[y]>d[x]+z) {
         d[y]=d[x]+z;
         que.push(P(d[y],y));
+        g[y].clear();
         g[y].push_back(P(x,z));
       } else if(d[y]==d[x]+z) g[y].push_back(P(x,z));
     }
