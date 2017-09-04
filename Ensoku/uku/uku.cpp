@@ -10,7 +10,7 @@ using namespace std;
 #define MAX_N 10
 #define MAX_K 100
 
-int A, B, N;
+int N, A, B;
 int K[MAX_N];
 int a[MAX_N][MAX_K];
 int b[MAX_N][MAX_K];
@@ -19,12 +19,26 @@ int d[MAX_N][MAX_N];
 
 int dp1[MAX_N][MAX_B+1];
 int dp2[1<<MAX_N][MAX_N][MAX_N];
-int dp3[1<<MAX_N][MAX_A];
-int dp4[1<<MAX_N][MAX_A];
+int dp3[1<<MAX_N][MAX_B+1];
+int dp4[1<<MAX_N][MAX_B+1];
 
 const int inf = 1<<25;
 
 int main() {
+  cin >> N >> A >> B;
+  for(int i = 0; i < N; i++) cin >> K[i];
+  for(int i = 0; i < N; i++)
+    for(int j = 0; j < K[i]; j++)
+      cin >> a[i][j];
+  for(int i = 0; i < N; i++)
+    for(int j = 0; j < K[i]; j++)
+      cin >> b[i][j];
+  for(int i = 0; i < N; i++)
+    for(int j = 0; j < K[i]; j++)
+      cin >> c[i][j];
+  for(int i = 0; i < N; i++)
+    for(int j = 0; j < N; j++)
+      cin >> d[i][j];
 
   memset(dp1, 0, sizeof(dp1));
   for(int i = 0; i < N; i++) {
@@ -67,11 +81,11 @@ int main() {
   }
 
   for(int bit = 0; bit < 1<<N; bit++)
-    for(int i = 0; i <= A; i++)
+    for(int i = 0; i <= B; i++)
       dp3[bit][i] = inf;
 
   int n1 = N/2;
-  for(int i = 0; i <= A; i++) dp3[1<<0][i] = dp1[0][i];
+  for(int i = 0; i <= B; i++) dp3[1<<0][i] = dp1[0][i];
   for(int bit = 0; bit < 1<<n1; bit++) {
     for(int i = 0; i < n1; i++) {
       if((bit>>i)&1) continue;
@@ -84,11 +98,11 @@ int main() {
   }
 
   for(int bit = 0; bit < 1<<N; bit++)
-    for(int i = 0; i <= A; i++)
+    for(int i = 0; i <= B; i++)
       dp4[bit][i] = inf;
 
   int n2 = (N+1)/2;
-  for(int i = 0; i <= A; i++) dp4[1<<0][i] = dp1[n1][i];
+  for(int i = 0; i <= B; i++) dp4[1<<0][i] = dp1[n1][i];
   for(int bit = 0; bit < 1<<n2; bit++) {
     for(int i = 0; i < n2; i++) {
       if((bit>>i)&1) continue;

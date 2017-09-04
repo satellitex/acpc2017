@@ -10,7 +10,7 @@ const int M_MAX = 100000;
 const int C_MIN = 1;
 const int C_MAX = 1000000;
 const int Q_MIN = 1;
-const int Q_MAX = 100000;
+const int Q_MAX = 100;
 
 int N, M, T, Q;
 int a[M_MAX], b[M_MAX], c[M_MAX];
