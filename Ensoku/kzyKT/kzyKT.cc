@@ -5,11 +5,11 @@ using namespace std;
 typedef pair<int,int> P;
 typedef pair<int,P> PP;
 
+int dp1[10][1001],c[10][10],dp2[1<<10][10],dp3[2][1<<5][1001],dp[1<<10][1001],ans;
+vector<PP> a[11];
 int main() {
   int A,B,n;
   cin >> n >> A >> B;
-  int dp1[n][B+1];
-  vector<PP> a[n];
   for(int k=0; k<n; k++) {
     fill(dp1[k],dp1[k]+B+1,-(1<<30));
     dp1[k][0]=0;
@@ -30,10 +30,8 @@ int main() {
       }
     }
   }
-  int c[n][n];
   for(int i=0; i<n; i++)for(int j=0; j<n; j++) cin >> c[i][j];
   for(int k=0;k<n;k++)for(int i=0;i<n;i++)for(int j=0;j<n;j++)c[i][j]=min(c[i][j],c[i][k]+c[k][j]);
-  int dp2[1<<n][n];
   for(int t=0;t<(1<<n);t++)for(int i=0;i<n;i++) dp2[t][i]=1<<30;
   for(int i=0; i<n; i++) dp2[1<<i][i]=c[0][i];
   for(int t=1; t<(1<<n); t++) {
@@ -45,7 +43,6 @@ int main() {
       }
     }
   }
-  int dp3[2][1<<(n/2+1)][B+1];
   for(int t=0;t<(1<<(n/2+1));t++)for(int i=0;i<=B;i++)dp3[0][t][i]=dp3[1][t][i]-(1<<30);
   for(int l=0; l<2; l++) {
     for(int t=0; t<(1<<(n/2+n%2*l)); t++) {
@@ -60,7 +57,6 @@ int main() {
       for(int i=0; i<B; i++) dp3[l][t][i+1]=max(dp3[l][t][i+1],dp3[l][t][i]);
     }
   }
-  int dp[1<<n][B+1],ans=0;
   for(int t=0;t<(1<<n);t++)for(int i=0;i<=B;i++)dp[t][i]=-(1<<30);
   for(int t=0;t<(1<<(n/2));t++) {
     for(int s=0; s<(1<<(n/2+n%2)); s++) {
