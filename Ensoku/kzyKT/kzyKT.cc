@@ -29,6 +29,7 @@ int main() {
         t*=2;
       }
     }
+    for(int i=0; i<B; i++) dp1[k][i+1]=max(dp1[k][i+1],dp1[k][i]);
   }
   for(int i=0; i<n; i++)for(int j=0; j<n; j++) cin >> c[i][j];
   for(int k=0;k<n;k++)for(int i=0;i<n;i++)for(int j=0;j<n;j++)c[i][j]=min(c[i][j],c[i][k]+c[k][j]);
@@ -45,10 +46,12 @@ int main() {
   }
   for(int t=0;t<(1<<(n/2+n%2));t++)for(int i=0;i<=B;i++)dp3[0][t][i]=dp3[1][t][i]=-(1<<30);
   for(int l=0; l<2; l++) {
+    dp3[l][0][0]=0;
     for(int t=0; t<(1<<(n/2+n%2*l)); t++) {
       for(int i=0; i<n/2+n%2*l; i++) {
-        if(!(t&(1<<i))) continue;
+        if(t&(1<<i)) continue;
         for(int j=B; j>=0; j--) {
+          if(dp3[l][t][j]==-(1<<30)) continue;
           for(int k=B-j; k>=0; k--) {
             dp3[l][t|(1<<i)][j+k]=max(dp3[l][t|(1<<i)][j+k],dp3[l][t][j]+dp1[i+n/2*l][k]);
           }
@@ -59,9 +62,10 @@ int main() {
   }
   for(int t=0;t<(1<<n);t++)for(int i=0;i<=B;i++)dp[t][i]=-(1<<30);
   for(int t=0;t<(1<<(n/2));t++) {
+    if(t%2==0) continue;
     for(int s=0; s<(1<<(n/2+n%2)); s++) {
-      int x=dp2[t|(s<<(n/2))][0];
-      for(int i=0; i<=B; i++) ans=max(ans,dp3[0][t][i]+dp3[1][s][min(B,A-i)]);
+      int C=max(0,A-dp2[t|(s<<(n/2))][0]),D=min(B,C);
+      for(int i=0; i<=D; i++)ans=max(ans,dp3[0][t][i]+dp3[1][s][D-i]);
     }
   }
   cout << ans << endl;
