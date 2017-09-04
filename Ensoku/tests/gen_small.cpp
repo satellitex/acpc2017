@@ -24,7 +24,7 @@ void start(int id) {
   ofstream out(format("01_small_%02d.in", id).c_str());
   int N = rnd.next(MIN_N, MAX_N);
   int A = rnd.next(MIN_A, MAX_A);
-  int B = rnd.next(MIN_B, MAX_B);
+  int B = rnd.next(MIN_B, min(MAX_B,A));
   out<<N<<" "<<A<<" "<<B<<endl;
 
   for(int i = 0; i < N; i++) {

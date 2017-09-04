@@ -29,6 +29,7 @@ void input() {
   inf.readSpace();
   int B = inf.readInt(MIN_B, MAX_B, "B");
   inf.readEoln();
+  ensuref(B<=A,"A must be lather than B or equal B");
   
   for(int i = 0; i < N; i++) {
     int K = inf.readInt(MIN_K, MAX_K, "K");
