@@ -64,7 +64,7 @@ void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
 }
 
 int solve(){
-  if(n == 1) n++;
+  if(n == 1) n++,D[0][1] = INF;
   WF();
   DP1(dp1);
   for(int i=0;i<n;i++) DP2(dp2[i],stores[i]);
@@ -76,11 +76,14 @@ int solve(){
   for(int i=0;i<(1<<n_1);i++)
     for(int j=0;j<(1<<n_2);j++)
       for(int k=0;k<=B;k++){
-        int bit = (i<<n_2) | j;
-        int l = min(B,A-k-dp1[bit][0]) - k;
+        int bit = (j<<n_1) | i;
+        int l = min(B-k,A-k-dp1[bit][0]);
         if(!(bit&1) || l < 0)continue;
         int score = dp3_1[i][k] + dp3_2[j][l];
-        //        cout<<dp1[bit][0]<<" "<<k<<" "<<bit<<" "<<dp1[bit][0]<<" "<<k<<" "<<l<<" "<<score<<endl;
+        
+        //cout<<"i="<<i<<" j="<<j<<endl;
+        //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
+        //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
         
         Max(res,score);
       }
@@ -100,7 +103,7 @@ signed main(){
   for(int i=0;i<n;i++)
     for(int j=0;j<n;j++)cin>>D[i][j];
 
-  
+
   cout<<solve()<<endl;
   
   return 0;
