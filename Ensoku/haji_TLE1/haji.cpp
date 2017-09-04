@@ -39,12 +39,12 @@ void DP1(int dp[1<<N][N]){
 }
 
 int dp2[N][MAX_B];
-void DP2(int dp[MAX_B],vector<dat> store){
+void DP2(int dp[MAX_B],vector<dat> store){ // TLE
   for(dat t:store){
     int a = t.a, b = t.b, c = t.c;
-    for(int j=1;c>0;c-=j,j=min(j*2,c))
-      for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
-    }
+    for(int k=B;k>=0;k--)
+      for(int j=1;j<=c && k+a*j<=B;j++) Max(dp[k+j*a],dp[k] + j * b);
+  }
 }
 
 int dp3_1[1<<(N/2)][MAX_B];
