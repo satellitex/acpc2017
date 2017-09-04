@@ -12,7 +12,7 @@ const int MAX_v = 360;
 const int MAX_s = 360;
 
 void start(int id) {
-  ofstream out(format("neet_random_%02d.in", id).c_str());
+  ofstream out(format("neet_small_%02d.in", id).c_str());
   int n = rnd.next(1, MAX_n);
   out << n << endl;
   for(int i = 0; i < n; i++) {
