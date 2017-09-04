@@ -77,10 +77,11 @@ int solve(){
     for(int j=0;j<(1<<n_2);j++)
       for(int k=0;k<=B;k++){
         int bit = (i<<n_2) | j;
-        int cost = k + max(0LL,dp1[bit][0] - (A - k));
-        if(!(bit&1))continue;
-        if(B - cost < 0) continue;
-        int score = dp3_1[i][k] + dp3_2[j][B - cost];
+        int l = min(B,A-k-dp1[bit][0]) - k;
+        if(!(bit&1) || l < 0)continue;
+        int score = dp3_1[i][k] + dp3_2[j][l];
+        //        cout<<dp1[bit][0]<<" "<<k<<" "<<bit<<" "<<dp1[bit][0]<<" "<<k<<" "<<l<<" "<<score<<endl;
+        
         Max(res,score);
       }
   return res;  
@@ -96,8 +97,8 @@ signed main(){
     }
   }
 
-  for(int i=0;i<N;i++)
-    for(int j=0;j<N;j++)cin>>D[i][j];
+  for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++)cin>>D[i][j];
 
   
   cout<<solve()<<endl;
