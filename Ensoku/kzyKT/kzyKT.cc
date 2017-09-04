@@ -51,7 +51,6 @@ int main() {
       for(int i=0; i<n/2+n%2*l; i++) {
         if(t&(1<<i)) continue;
         for(int j=B; j>=0; j--) {
-          if(dp3[l][t][j]==-(1<<30)) continue;
           for(int k=B-j; k>=0; k--) {
             dp3[l][t|(1<<i)][j+k]=max(dp3[l][t|(1<<i)][j+k],dp3[l][t][j]+dp1[i+n/2*l][k]);
           }
