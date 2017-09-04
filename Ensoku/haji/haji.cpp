@@ -47,7 +47,6 @@ void DP2(int dp[MAX_B],vector<dat> store){
     }
 }
 
-
 int dp3_1[1<<(N/2)][MAX_B];
 int dp3_2[1<<(N/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){

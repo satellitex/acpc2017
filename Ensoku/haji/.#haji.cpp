@@ -1,1 +1,0 @@
-Hiroki@wlan1230.u-aizu.ac.jp.52685
