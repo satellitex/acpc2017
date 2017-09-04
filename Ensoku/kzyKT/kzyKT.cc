@@ -43,14 +43,14 @@ int main() {
       }
     }
   }
-  for(int t=0;t<(1<<(n/2+1));t++)for(int i=0;i<=B;i++)dp3[0][t][i]=dp3[1][t][i]-(1<<30);
+  for(int t=0;t<(1<<(n/2+n%2));t++)for(int i=0;i<=B;i++)dp3[0][t][i]=dp3[1][t][i]=-(1<<30);
   for(int l=0; l<2; l++) {
     for(int t=0; t<(1<<(n/2+n%2*l)); t++) {
       for(int i=0; i<n/2+n%2*l; i++) {
         if(!(t&(1<<i))) continue;
         for(int j=B; j>=0; j--) {
           for(int k=B-j; k>=0; k--) {
-            dp3[l][t|(1<<i)][j+k]=max(dp3[l][t|(1<<i)][j+k],dp3[l][t][j]+dp1[i+n/2][k]);
+            dp3[l][t|(1<<i)][j+k]=max(dp3[l][t|(1<<i)][j+k],dp3[l][t][j]+dp1[i+n/2*l][k]);
           }
         }
       }
