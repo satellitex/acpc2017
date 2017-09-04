@@ -113,13 +113,26 @@ int main() {
     for(int bit2 = 0; bit2 < 1<<n2; bit2++) {
       for(int i = 0; i <= B; i++) {
 	for(int j = 0; j < N; j++) {
-	  int idx = A-i-dp2[bit1|(bit2<<n1)][0][j]-d[j][0];
+	  if((j < n1 && !((bit1>>j)&1)) || (j >= n1 && !((bit2>>(j-n1))&1))) continue;
+	  int idx = min(B-i, A-i-dp2[bit1|(bit2<<n1)][0][j]-d[j][0]);
 	  if(0 <= idx && idx <= B) ans = max(ans, dp3[bit1][i]+dp4[bit2][idx]);
 	}
       }
     }
   }
   cout << ans << endl;
+  /*
+  cout << n1 << endl;
+  for(int i = 0; i < 1<<n1; i++) {
+    for(int j = 0; j <= B; j++) cout << dp3[i][j] << " ";
+    cout << endl;
+  }
 
+  cout << n2 << endl;
+  for(int i = 0; i < 1<<n2; i++) {
+    for(int j = 0; j <= B; j++) cout << dp4[i][j] << " ";
+    cout << endl;
+  }
+  */
   return 0;
 }
