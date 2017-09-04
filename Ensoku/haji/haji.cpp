@@ -26,7 +26,8 @@ void DP1(int dp[1<<N][N]){
 
   for(int i=0;i<(1<<N);i++)
     for(int j=0;j<N;j++) dp[i][j] = INF;
-      
+  
+  dp[0][0] = 0;
   
   for(int bit = 0;bit<(1<<n);bit++)
     for(int pos = 0;pos<n;pos++)
@@ -73,13 +74,11 @@ int solve(){
   for(int i=0;i<(1<<n_1);i++)
     for(int j=0;j<(1<<n_2);j++)
       for(int k=0;k<=B;k++){
-        for(int t=0;t<n;t++) {
-          int bit = (i<<n_2) | j;
-          int cost = k + dp1[bit][t] + D[t][0];
-          if(B - cost < 0) continue;
-          int score = dp3_1[i][k] + dp3_2[j][B - cost];
-          Max(res,score);
-        }          
+        int bit = (i<<n_2) | j;
+        int cost = k + dp1[bit][0];
+        if(B - cost < 0) continue;
+        int score = dp3_1[i][k] + dp3_2[j][B - cost];
+        Max(res,score);
       }
   return res;  
 }
