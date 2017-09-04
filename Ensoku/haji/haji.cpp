@@ -45,12 +45,14 @@ void DP2(int dp[MAX_B],vector<dat> store){
     for(int j=1;c>0;c-=j,j=min(j*2,c))
       for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
     }
+
+  for(int i=0;i<=B;i++) Max(dp[i+1],dp[i]);
 }
 
 int dp3_1[1<<(N/2)][MAX_B];
 int dp3_2[1<<(N/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-  
+
   for(int bit = 0;bit<(1<<n);bit++){
     for(int nx=0;nx<n;nx++){
       if(bit>>nx&1)continue;
@@ -58,7 +60,7 @@ void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
       for(int i=0;i<B;i++)
         for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
     }
-  }  
+  }
 }
 
 int solve(){
@@ -75,11 +77,10 @@ int solve(){
     for(int j=0;j<(1<<n_2);j++)
       for(int k=0;k<=B;k++){
         int bit = (i<<n_2) | j;
-        int cost = k + max(0LL,A-dp1[bit][0]);
+        int cost = k + max(0LL,dp1[bit][0] - (A - k));
         if(!(bit&1))continue;
         if(B - cost < 0) continue;
         int score = dp3_1[i][k] + dp3_2[j][B - cost];
-        cout<<score<<endl;
         Max(res,score);
       }
   return res;  
