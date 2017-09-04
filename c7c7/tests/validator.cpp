@@ -1,28 +1,28 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <string>
+#include "./testlib.h"
+#include <cassert>
 using namespace std;
+#define MIN_N 1
+#define MAX_N 1000
+#define MIN_M 1
+#define MAX_M 30
+int main(){
 
-int N , M ;
+    registerValidation();
 
-string s;
+    int n = inf.readInt(MIN_N, MAX_N);
+    inf.readSpace();
 
-int main() {
+    int m = inf.readInt(MIN_M, MAX_M);
+    inf.readEoln();
 
-	cin >> N >> M ;
-
-	if( N < 1 || 1000 < N || M < 1|| 30 < M ) exit(1) ;
-
-	for( int i = 0 ; i < N ; i++ ) {
-
-		cin >> s ;
-
-		for( int j = 0 ; j < M ; j++ ) {
-
-			if( s[j] < 'a' || 'z' < s[j] ) exit(1) ;
-		}
-
-		if( s.size() != M ) exit(1) ;
-	}
-
-	if( scanf("%d",&N) != EOF ) exit(1) ;
+    for(int i = 0; i < n; i++){
+        string s = inf.readString();
+        if((int)s.size()!=m)assert(1);
+        for(int j=0;j<s.size();j++){
+            if(s[j]<'a'||'z'<s[j])assert(1);
+        }
+    }
+    inf.readEof();
 }
