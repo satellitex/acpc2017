@@ -7,6 +7,7 @@ char t[2005][2005];
 bool T[2005][2005];
 int a[2005][2005];
 int b[2005][2005];
+map < P , vector<P> > G;
 
 bool inField(int y,int x){
   return (0<=y&&y<N&&0<=x&&x<N);
@@ -16,12 +17,19 @@ bool inField(P p){
   return inField(p.first,p.second);
 }
 
-P dfs(P p,int dy,int dx){
+map< P , P > mem[4];
+
+P search(P p,int dir){
+  if(mem[dir].count(p))return mem[dir][p];
+  int Dy[]={-1,-1,1,1};
+  int Dx[]={-1,1,1,-1};
+  int dy=Dy[dir];
+  int dx=Dx[dir];
   int y=p.first+dy;
   int x=p.second+dx;
   while(inField(y+dy,x)&&t[y+dy][x]=='o')y+=dy;
   while(inField(y,x+dx)&&t[y][x+dx]=='o')x+=dx;
-  return P(y+dy,x+dx);
+  return mem[dir][p]=P(y+dy,x+dx);
 }
 
 void put(P p,int dir){
@@ -37,42 +45,56 @@ void put(P p,int dir){
   }
 }
 
-int main(){
-  scanf("%d",&N);
-  for(int i=0;i<N;i++)scanf("%s",t[i]);
+
+
+P solve(int ay,int ax,int by,int bx){
+  set< P > st;
   P sp=P(-1,-1);
-  set<P> st;
-  
-  P tmp=P(-1,-1);
+  P tmp=P(ay,ax);
   while(1){
-    tmp=dfs(tmp,1,1);
-    if(!inField(tmp.first,tmp.second))break;
+    tmp=search(tmp,2);
+    if(!inField(tmp))break;
     st.insert(tmp);
   }
-  tmp=P(N,-1);
+  tmp=P(by,ax);
   while(1){
-    tmp=dfs(tmp,-1,1);
-    if(!inField(tmp.first,tmp.second))break;
+    tmp=search(tmp,1);
+    if(!inField(tmp))break;
     if(st.count(tmp)){
       sp=tmp;
       break;
     }
   }
-  if(sp.first==-1){
-    printf("-1\n");
-    return 0;
-  }
+  if(sp.first==-1)return P(-1,-1);
+  if(sp.first<=ay || sp.second<=ax)return P(-1,-1);
+  if(sp.first>=by || sp.second>=bx)return P(-1,-1);
+  
+  P LU=solve(ay,ax,sp.first,sp.second);
+  P LD=solve(sp.first,ax,by,sp.second);
+  P RU=solve(ay,sp.second,sp.first,bx);
+  P RD=solve(sp.first,sp.second,by,bx);
+  G[ sp ].push_back(LU);
+  G[ sp ].push_back(LD);
+  G[ sp ].push_back(RU);
+  G[ sp ].push_back(RD);
+  return sp;
+}
+
+int main(){
+  scanf("%d",&N);
+  for(int i=0;i<N;i++)scanf("%s",t[i]);
+
+  P sp=solve(-1,-1,N,N);
   
   map<P,bool> flg;
   priority_queue< P , vector<P> , greater<P> > Q;
   flg[ sp ]=true;
   Q.push( sp );
-  int dy[]={-1,-1,1,1};
-  int dx[]={-1,1,1,-1};
-
+  
   vector<P> ans;
   while(!Q.empty()){
     P p=Q.top();
+
     Q.pop();
     ans.push_back(p);
 
@@ -80,12 +102,14 @@ int main(){
       printf("-1\n");
       return 0;
     }
-    
+
     for(int i=0;i<4;i++){
       put(p,i);
     }
-    for(int i=0;i<4;i++){
-      P to=dfs(p,dy[i],dx[i]);
+    
+    for(int i=0;i<(int)G[p].size();i++){
+      P to=G[ p ][i];
+      if(to==P(-1,-1))continue;
       if(flg[to])continue;
       if(!inField(to))continue;
       flg[to]=true;
