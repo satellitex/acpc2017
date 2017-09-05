@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int MAX_n = 100;
+const int MAX_n = 1000000;
 const int MAX_m = 12;
 const int MAX_d = 30;
 const int MAX_v = 360;
