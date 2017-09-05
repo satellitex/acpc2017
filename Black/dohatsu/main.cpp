@@ -75,6 +75,12 @@ int main(){
     P p=Q.top();
     Q.pop();
     ans.push_back(p);
+
+    if(T[p.first][p.second]){
+      printf("-1\n");
+      return 0;
+    }
+    
     for(int i=0;i<4;i++){
       put(p,i);
     }
