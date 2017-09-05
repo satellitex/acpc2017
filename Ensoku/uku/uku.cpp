@@ -26,16 +26,12 @@ const int inf = 1<<25;
 
 int main() {
   cin >> N >> A >> B;
-  for(int i = 0; i < N; i++) cin >> K[i];
-  for(int i = 0; i < N; i++)
-    for(int j = 0; j < K[i]; j++)
-      cin >> a[i][j];
-  for(int i = 0; i < N; i++)
-    for(int j = 0; j < K[i]; j++)
-      cin >> b[i][j];
-  for(int i = 0; i < N; i++)
-    for(int j = 0; j < K[i]; j++)
-      cin >> c[i][j];
+  for(int i = 0; i < N; i++) {
+    cin >> K[i];
+    for(int j = 0; j < K[i]; j++) {
+      cin >> a[i][j] >> b[i][j] >> c[i][j];
+    }
+  }
   for(int i = 0; i < N; i++)
     for(int j = 0; j < N; j++)
       cin >> d[i][j];
@@ -54,7 +50,11 @@ int main() {
 	lim -= num;
       }
     }
+    for(int j = 1; j <= B; j++) {
+      dp1[i][j] = max(dp1[i][j], dp1[i][j-1]);
+    }
   }
+
 
   for(int k = 0; k < N; k++)
     for(int i = 0; i < N; i++)
@@ -80,10 +80,7 @@ int main() {
     }
   }
 
-  for(int bit = 0; bit < 1<<N; bit++)
-    for(int i = 0; i <= B; i++)
-      dp3[bit][i] = inf;
-
+  memset(dp3, 0, sizeof(dp3));
   int n1 = N/2;
   for(int i = 0; i <= B; i++) dp3[1<<0][i] = dp1[0][i];
   for(int bit = 0; bit < 1<<n1; bit++) {
@@ -97,10 +94,7 @@ int main() {
     }
   }
 
-  for(int bit = 0; bit < 1<<N; bit++)
-    for(int i = 0; i <= B; i++)
-      dp4[bit][i] = inf;
-
+  memset(dp4, 0, sizeof(dp4));
   int n2 = (N+1)/2;
   for(int i = 0; i <= B; i++) dp4[1<<0][i] = dp1[n1][i];
   for(int bit = 0; bit < 1<<n2; bit++) {
@@ -119,13 +113,26 @@ int main() {
     for(int bit2 = 0; bit2 < 1<<n2; bit2++) {
       for(int i = 0; i <= B; i++) {
 	for(int j = 0; j < N; j++) {
-	  int idx = A-i-dp2[bit1|(bit2<<n1)][0][j]-d[j][0];
+	  if((j < n1 && !((bit1>>j)&1)) || (j >= n1 && !((bit2>>(j-n1))&1))) continue;
+	  int idx = min(B-i, A-i-dp2[bit1|(bit2<<n1)][0][j]-d[j][0]);
 	  if(0 <= idx && idx <= B) ans = max(ans, dp3[bit1][i]+dp4[bit2][idx]);
 	}
       }
     }
   }
   cout << ans << endl;
+  /*
+  cout << n1 << endl;
+  for(int i = 0; i < 1<<n1; i++) {
+    for(int j = 0; j <= B; j++) cout << dp3[i][j] << " ";
+    cout << endl;
+  }
 
+  cout << n2 << endl;
+  for(int i = 0; i < 1<<n2; i++) {
+    for(int j = 0; j <= B; j++) cout << dp4[i][j] << " ";
+    cout << endl;
+  }
+  */
   return 0;
 }
