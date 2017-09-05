@@ -46,17 +46,19 @@ void DP2(int dp[MAX_B],vector<dat> store){
       for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
     }
 
-  for(int i=0;i<=B;i++) Max(dp[i+1],dp[i]);
+  for(int i=0;i<B;i++) Max(dp[i+1],dp[i]);
 }
 
 int dp3_1[1<<(N/2)][MAX_B];
 int dp3_2[1<<(N/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-
+  bool used[1<<(N/2)]={};
   for(int bit = 0;bit<(1<<n);bit++){
     for(int nx=0;nx<n;nx++){
       if(bit>>nx&1)continue;
       int nbit = bit | (1<<nx);
+      if(used[nbit])continue;
+      used[nbit] = 1;
       for(int i=0;i<B;i++)
         for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
     }
@@ -81,11 +83,10 @@ int solve(){
         if(!(bit&1) || l < 0)continue;
         int score = dp3_1[i][k] + dp3_2[j][l];
         
+        Max(res,score);        
         //cout<<"i="<<i<<" j="<<j<<endl;
         //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
         //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
-        
-        Max(res,score);
       }
   return res;  
 }

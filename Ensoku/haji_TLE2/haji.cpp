@@ -39,21 +39,23 @@ void DP1(int dp[1<<N][N]){
 }
 
 int dp2[N][MAX_B];
-void DP2(int dp[MAX_B],vector<dat> store){ // TLE
+void DP2(int dp[MAX_B],vector<dat> store){
   for(dat t:store){
     int a = t.a, b = t.b, c = t.c;
-    for(int k=B;k>=0;k--) 
-      for(int j=1;j<=c && k+j*a<=B;j++) Max(dp[k+j*a],dp[k] + j * b);
-  }
+    for(int j=1;c>0;c-=j,j=min(j*2,c))
+      for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
+    }
 
   for(int i=0;i<=B;i++) Max(dp[i+1],dp[i]);
 }
 
-int dp3_1[1<<(N/2)][MAX_B];
-int dp3_2[1<<(N/2)][MAX_B];
-void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-  bool used[1<<(N/2)]={};
+int dp3_1[1<<(N)][MAX_B];
+void DP3(int dp[1<<(N)][MAX_B],int n,int dp2[][MAX_B]){
+  bool used[1<<N]={};
   for(int bit = 0;bit<(1<<n);bit++){
+
+    for(int i=0;i<B;i++) Max(dp[bit][i+1],dp[bit][i]);
+
     for(int nx=0;nx<n;nx++){
       if(bit>>nx&1)continue;
       int nbit = bit | (1<<nx);
@@ -70,24 +72,21 @@ int solve(){
   WF();
   DP1(dp1);
   for(int i=0;i<n;i++) DP2(dp2[i],stores[i]);
-  int n_1 = n/2 ,n_2 = n/2 + n%2;
-  DP3(dp3_1,n_1,dp2);
-  DP3(dp3_2,n_2,&dp2[n_1]);
-
+  DP3(dp3_1,n,dp2);
+  
   int res = 0;
-  for(int i=0;i<(1<<n_1);i++)
-    for(int j=0;j<(1<<n_2);j++)
-      for(int k=0;k<=B;k++){
-        int bit = (j<<n_1) | i;
-        int l = min(B-k,A-k-dp1[bit][0]);
-        if(!(bit&1) || l < 0)continue;
-        int score = dp3_1[i][k] + dp3_2[j][l];
-        
-        //cout<<"i="<<i<<" j="<<j<<endl;
-        //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
-        //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
-        
-        Max(res,score);
+  for(int i=0;i<(1<<n);i++)
+    for(int k=0;k<=B;k++){
+      int bit =  i;
+      int l = min(B-k,A-k-dp1[bit][0]);
+      if(!(bit&1) || l < 0)continue;
+      int score = dp3_1[i][k];
+      
+      //cout<<"i="<<i<<" j="<<j<<endl;
+      //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
+      //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
+      
+      Max(res,score);
       }
   return res;  
 }
