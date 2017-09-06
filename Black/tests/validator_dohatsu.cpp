@@ -4,7 +4,7 @@
 using namespace std;
 
 const int MIN_N = 3;
-const int MAX_N = 1999;
+const int MAX_N = 2047;
 
 int main(){
   registerValidation();
