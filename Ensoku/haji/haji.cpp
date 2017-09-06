@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define int long long
-#define N 10
-#define MAX_K 101
+#define N 12
 #define MAX_A 10010
 #define MAX_B 1010
 using namespace std;
@@ -15,6 +14,7 @@ int n,A,B;
 struct dat{int a,b,c;};
 vector<dat> stores[N];
 int D[N][N];
+
 void WF(){
   for(int k=0;k<n;k++)
     for(int i=0;i<n;i++)
@@ -28,39 +28,39 @@ void DP1(int dp[1<<N][N]){
     for(int j=0;j<N;j++) dp[i][j] = INF;
   
   dp[0][0] = 0;
-  
   for(int bit = 0;bit<(1<<n);bit++)
     for(int pos = 0;pos<n;pos++)
       for(int nx = 0;nx<n;nx++){
         if(bit>>nx&1) continue;
         int nbit = bit | 1<<nx;
-        Min(dp[nbit][nx],dp[bit][pos] + D[pos][nx]);
+        Min(dp[nbit][nx], dp[bit][pos] + D[pos][nx]);
       }
 }
 
 int dp2[N][MAX_B];
 void DP2(int dp[MAX_B],vector<dat> store){
+
   for(dat t:store){
     int a = t.a, b = t.b, c = t.c;
     for(int j=1;c>0;c-=j,j=min(j*2,c))
       for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
     }
-
-  for(int i=0;i<B;i++) Max(dp[i+1],dp[i]);
 }
 
 int dp3_1[1<<(N/2)][MAX_B];
 int dp3_2[1<<(N/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
   bool used[1<<(N/2)]={};
+
   for(int bit = 0;bit<(1<<n);bit++){
+    for(int i=0;i<B;i++) Max(dp[bit][i+1],dp[bit][i]);
+    
     for(int nx=0;nx<n;nx++){
-      if(bit>>nx&1)continue;
       int nbit = bit | (1<<nx);
-      if(used[nbit])continue;
+      if((bit==nbit)||used[nbit])continue;
       used[nbit] = 1;
-      for(int i=0;i<B;i++)
-        for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
+      for(int i=0;i<=B;i++)
+        for(int j=0;i+j<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
     }
   }
 }
@@ -73,21 +73,17 @@ int solve(){
   int n_1 = n/2 ,n_2 = n/2 + n%2;
   DP3(dp3_1,n_1,dp2);
   DP3(dp3_2,n_2,&dp2[n_1]);
-
+  
   int res = 0;
-  for(int i=0;i<(1<<n_1);i++)
-    for(int j=0;j<(1<<n_2);j++)
-      for(int k=0;k<=B;k++){
-        int bit = (j<<n_1) | i;
-        int l = min(B-k,A-k-dp1[bit][0]);
-        if(!(bit&1) || l < 0)continue;
-        int score = dp3_1[i][k] + dp3_2[j][l];
-        
+  for(int i=1;i<(1<<n_1);i+=2)
+    for(int j=0;j<(1<<n_2);j++){
+      int bit = (j<<n_1) | i;
+      int B_ = min(B, A - dp1[bit][0]);
+      for(int k=0;k<=B_;k++){
+        int score = dp3_1[i][k] + dp3_2[j][B_ - k];
         Max(res,score);        
-        //cout<<"i="<<i<<" j="<<j<<endl;
-        //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
-        //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
       }
+    }
   return res;  
 }
 

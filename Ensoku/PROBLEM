@@ -7,6 +7,6 @@
 ##   time_limit: The time limit of this problem in seconds.
 problem(title = "Ensoku",
         id = "G",
-        time_limit = 3.0,
+        time_limit = 10.0,
         reference_solution='haji'
 )

@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define int long long
-#define N 10
-#define MAX_K 101
+#define N 12
 #define MAX_A 10010
 #define MAX_B 1010
 using namespace std;
@@ -72,7 +71,6 @@ void DP3(int bit,int l,int r){
 }
 
 int solve(){
-  if(n == 1) n++;
   WF();
   DP1(dp1);
   
