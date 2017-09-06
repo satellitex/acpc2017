@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define int long long
+
 using Pi = pair<int, int>;
 using vint = vector<int>;
 using Graph = vector<vint>;
@@ -66,6 +68,11 @@ struct BICC {
     int num = 0;
     vis.clear();
     vis.resize(V, 0);
+    {
+      vint vec;
+      dfs2(0, num++, vec, vis);
+      nodes.push_back(vec);
+    }
     for(Pi e : bridge) {
       if(cmp[e.first] == -1) {
 	vint vec;
@@ -83,21 +90,18 @@ struct BICC {
 };
 
 struct SegmentTree {
-  vint sum, maxi;
+  vint sum;
   int sz;
   SegmentTree(int n) {
     sz = 1; while(sz < n) sz *= 2;
     sum.resize(2*sz-1, 0);
-    maxi.resize(2*sz-1, 0);
   }
   void set(int k, int x) {
     k += sz-1;
     sum[k] = x;
-    maxi[k] = x;
     while(k > 0) {
       k = (k-1)/2;
       sum[k] = sum[2*k+1]+sum[2*k+2];
-      maxi[k] = max(sum[2*k+1], sum[2*k+2]);
     }
   }
   int Sum(int a, int b, int k, int l, int r) {
@@ -109,16 +113,6 @@ struct SegmentTree {
   }
   int Sum(int a, int b) {
     return Sum(a, b, 0, 0, sz);
-  }
-  int Max(int a, int b, int k, int l, int r) {
-    if(r <= a || b <= l) return 0;
-    if(a <= l && r <= b) return maxi[k];
-    int vl = Sum(a, b, 2*k+1, l, (l+r)/2);
-    int vr = Sum(a, b, 2*k+2, (l+r)/2, r);
-    return max(vl, vr);
-  }
-  int Max(int a, int b) {
-    return Max(a, b, 0, 0, sz);
   }
 };
 
@@ -154,7 +148,7 @@ void dfs(int u, int p) {
   ei4cc[bicc.cmp[u]] = idx;
 }
 
-int main() {
+signed main() {
   cin >> N >> M;
   w.resize(N);
   for(int i = 0; i < N; i++) cin >> w[i];
@@ -182,10 +176,7 @@ int main() {
   for(int i = 0; i < N; i++) {
     if(!bicc.apt.count(i)) continue;
     for(int& v : bicc.graph[i]) {
-      //if(!bicc.apt.count(v)) continue;
-      //if(!bicc.bridge.count(minmax(i, v))) continue;
       if(bi4cc[bicc.cmp[i]] > bi4cc[bicc.cmp[v]]) continue;
-      //maxi[i] = max(maxi[i], seg.Sum(bi4cc[bicc.cmp[v]], ei4cc[bicc.cmp[v]]));
       int m = seg.Sum(bi4cc[bicc.cmp[v]], ei4cc[bicc.cmp[v]]);
       if(bicc.cmp[i] == bicc.cmp[v]) {
 	m -= seg.Sum(bi4nd[i], ei4nd[i])+w[i];
@@ -199,18 +190,13 @@ int main() {
     cin >> x;
     --x;
     if(bicc.apt.count(x)) {
-      //cout << x << " IS ARTICULATION" << endl;
-      //x--;
-      int ans1 = seg.Sum(0, CCV);//seg.Sum(0, CCV) - seg.Sum(bi4nd[x], ei4nd[x]) - w[x];//seg.Sum(0, bi4cc[bicc.cmp[x]]) + seg.Sum(ei4cc[bicc.cmp[x]], CCV);
+      int ans1 = seg.Sum(0, CCV);
       if(bicc.bridge.count(minmax(par[x], x))) ans1 -= seg.Sum(bi4cc[bicc.cmp[x]], ei4cc[bicc.cmp[x]]);
       else ans1 -= seg.Sum(bi4nd[x], ei4nd[x])+w[x];
-      int ans2 = w[x];//seg.Sum(bi4nd[x], ei4nd[x]) - w[x];//seg.Sum(bi4cc[bicc.cmp[x]], ei4cc[bicc.cmp[x]]) - seg.Sum(bi4nd[x], ei4nd[x]) - w[x];
-      int ans3 = maxi[x];//seg.Max(bi4nd[x], ei4nd[x]);
-      //cout << ans1 << " " << ans2 << " " << ans3 << endl;
+      int ans2 = w[x];
+      int ans3 = maxi[x];
       cout << max({ans1, ans2, ans3}) << endl;
     } else {
-      //cout << x << " IS NOT" << endl;
-      //x--;
       cout << all - w[x] << endl;
     }
   }

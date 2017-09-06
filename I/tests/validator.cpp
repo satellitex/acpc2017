@@ -1,24 +1,20 @@
-#include <iostream>
-#include <vector>
-#include <set>
-#include <algorithm>
-#include <utility>
+#include <bits/stdc++.h>
 #include "testlib.h"
 
 using namespace std;
 
-const int N_MIN = 1;
-const int N_MAX = 100000;
-const int M_MAX = 100000;
-const int W_MIN = 1;
-const int W_MAX = 1000000;
-const int Q_MIN = 1;
-const int Q_MAX = 100000;
+const long long N_MIN = 1;
+const long long N_MAX = 100000;
+const long long M_MAX = 100000;
+const long long W_MIN = 1;
+const long long W_MAX = 1000000;
+const long long Q_MIN = 1;
+const long long Q_MAX = 100000;
 
-int N, M, Q;
-int w[N_MAX];
-int u[M_MAX], v[M_MAX];
-int x[Q_MAX];
+long long N, M, Q;
+long long w[N_MAX];
+long long u[M_MAX], v[M_MAX];
+long long x[Q_MAX];
 
 struct UnionFind {
   vector<int> data;
