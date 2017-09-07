@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
-#include "../../uku1/tests/testlib.h"
+#include "../../I/tests/testlib.h"
 using namespace std;
 typedef long long ll;
 typedef pair<int,int> P;
-ll N=50,M=15;
+ll N=200,M=15;
 int main() {
   registerValidation();
   int n=inf.readInt(2, N, "n");

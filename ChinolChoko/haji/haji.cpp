@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define int long long
 #define double long double
-#define N 51
+#define N 201
 #define M 15
 using namespace std;
 const int INF = 1LL<<55;
@@ -74,7 +74,7 @@ public:
 
 
 int n,m;
-double x[2][N],y[2][51];
+double x[2][N],y[2][N];
 double fx[M],fy[M];
 
 double dis(double x1,double y1,double x2,double y2){x1 -= x2;y1 -= y2;return sqrt(x1*x1 + y1*y1);}
