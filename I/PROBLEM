@@ -5,8 +5,8 @@
 ##   title: The problem title shown in test summary.
 ##   id: The problem ID (typically starts from A) used to order problems.
 ##   time_limit: The time limit of this problem in seconds.
-problem(title = "Ensoku",
-        id = "G",
-        time_limit = 10.0,
-        reference_solution='haji'
+problem(title = "",
+        id = "I",
+        time_limit = 5.0,
+        reference_solution='uku'
 )

@@ -1,29 +1,28 @@
 #include <iostream>
 #include "testlib.h"
 using namespace std;
-#define CASE_NUM 3
+#define CASE_NUM 5
 
 const int MAX_A = 10000;
 const int MAX_B = 1000;
-const int MAX_N = 10;
-const int MAX_K = 100;
-const int MAX_a = 3;
+const int MAX_N = 12;
+const int MAX_K = 500;
+const int MAX_a = 1;
 const int MAX_b = 1000;
 const int MAX_c = 1000;
-const int MAX_d = 2000;
+const int MAX_d = 10000;
 
-
-const int MIN_A = 10000;
+const int MIN_A = 1000;
 const int MIN_B = 1000;
-const int MIN_N = 10;
-const int MIN_K = 100;
+const int MIN_N = 12;
+const int MIN_K = 500;
 const int MIN_a = 1;
 const int MIN_b = 1;
-const int MIN_c = 950;
-const int MIN_d = 0;
+const int MIN_c = 1000;
+const int MIN_d = 1000;
 
 void start(int id) {
-  ofstream out(format("04_large_corner_%02d.in", id).c_str());
+  ofstream out(format("05_O2_killer_%02d.in", id).c_str());
   int N = rnd.next(MIN_N, MAX_N);
   int A = rnd.next(MIN_A, MAX_A);
   int B = rnd.next(MIN_B, min(MAX_B,A));
@@ -39,7 +38,7 @@ void start(int id) {
       out<<a<<" "<<b<<" "<<c<<endl;
     }
   }
-
+  
   for(int i=0;i<N;i++) {
     for(int j=0;j<N;j++){
       if( j ) out << " ";

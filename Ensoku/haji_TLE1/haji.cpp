@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define int long long
-#define N 10
-#define MAX_K 101
+#define N 12
 #define MAX_A 10010
 #define MAX_B 1010
 using namespace std;
@@ -42,27 +41,31 @@ int dp2[N][MAX_B];
 void DP2(int dp[MAX_B],vector<dat> store){ // TLE
   for(dat t:store){
     int a = t.a, b = t.b, c = t.c;
-    for(int k=B;k>=0;k--)
-      for(int j=1;j<=c && k+a*j<=B;j++) Max(dp[k+j*a],dp[k] + j * b);
+    for(int k=B;k>=0;k--) 
+      for(int j=1;j<=c && k+j*a<=B;j++) Max(dp[k+j*a],dp[k] + j * b);
   }
+
+  for(int i=0;i<=B;i++) Max(dp[i+1],dp[i]);
 }
 
 int dp3_1[1<<(N/2)][MAX_B];
 int dp3_2[1<<(N/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-  
+  bool used[1<<(N/2)]={};
   for(int bit = 0;bit<(1<<n);bit++){
     for(int nx=0;nx<n;nx++){
       if(bit>>nx&1)continue;
       int nbit = bit | (1<<nx);
+      if(used[nbit])continue;
+      used[nbit] = 1;
       for(int i=0;i<B;i++)
         for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
     }
-  }  
+  }
 }
 
 int solve(){
-  if(n == 1) n++;
+  if(n == 1) n++,D[0][1] = INF;
   WF();
   DP1(dp1);
   for(int i=0;i<n;i++) DP2(dp2[i],stores[i]);
@@ -74,12 +77,15 @@ int solve(){
   for(int i=0;i<(1<<n_1);i++)
     for(int j=0;j<(1<<n_2);j++)
       for(int k=0;k<=B;k++){
-        int bit = (i<<n_2) | j;
-        int cost = k + max(0LL,A-dp1[bit][0]);
-        if(!(bit&1))continue;
-        if(B - cost < 0) continue;
-        int score = dp3_1[i][k] + dp3_2[j][B - cost];
-        cout<<score<<endl;
+        int bit = (j<<n_1) | i;
+        int l = min(B-k,A-k-dp1[bit][0]);
+        if(!(bit&1) || l < 0)continue;
+        int score = dp3_1[i][k] + dp3_2[j][l];
+        
+        //cout<<"i="<<i<<" j="<<j<<endl;
+        //cout<<"bit="<<bit<<" "<<"cost for dp1="<<dp1[bit][0]<<endl;
+        //cout<<"k="<<k<<" l="<<l<<" score="<<score<<"="<<dp3_1[i][k]<<"+"<< dp3_2[j][l]<<endl;
+        
         Max(res,score);
       }
   return res;  
@@ -95,10 +101,10 @@ signed main(){
     }
   }
 
-  for(int i=0;i<N;i++)
-    for(int j=0;j<N;j++)cin>>D[i][j];
+  for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++)cin>>D[i][j];
 
-  
+
   cout<<solve()<<endl;
   
   return 0;

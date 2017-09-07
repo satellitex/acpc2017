@@ -14,7 +14,6 @@ int n,A,B;
 struct dat{int a,b,c;};
 vector<dat> stores[N];
 int D[N][N];
-
 void WF(){
   for(int k=0;k<n;k++)
     for(int i=0;i<n;i++)
@@ -28,62 +27,62 @@ void DP1(int dp[1<<N][N]){
     for(int j=0;j<N;j++) dp[i][j] = INF;
   
   dp[0][0] = 0;
+  
   for(int bit = 0;bit<(1<<n);bit++)
     for(int pos = 0;pos<n;pos++)
       for(int nx = 0;nx<n;nx++){
         if(bit>>nx&1) continue;
         int nbit = bit | 1<<nx;
-        Min(dp[nbit][nx], dp[bit][pos] + D[pos][nx]);
+        Min(dp[nbit][nx],dp[bit][pos] + D[pos][nx]);
       }
 }
 
 int dp2[N][MAX_B];
 void DP2(int dp[MAX_B],vector<dat> store){
-
   for(dat t:store){
     int a = t.a, b = t.b, c = t.c;
     for(int j=1;c>0;c-=j,j=min(j*2,c))
       for(int k=B;k>=j*a;k--) Max(dp[k],dp[k-j*a] + j * b);
     }
+
+  for(int i=0;i<B;i++) Max(dp[i+1],dp[i]);
 }
 
-int dp3_1[1<<(N/2)][MAX_B];
-int dp3_2[1<<(N/2)][MAX_B];
-void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-  bool used[1<<(N/2)]={};
+int getBit(int bit, int l,int r){
+  int a = ((1<<(r))-1) & (~((1<<l)-1));
+  return bit & a;
+}
 
-  for(int bit = 0;bit<(1<<n);bit++){
-    for(int i=0;i<B;i++) Max(dp[bit][i+1],dp[bit][i]);
-    
-    for(int nx=0;nx<n;nx++){
-      int nbit = bit | (1<<nx);
-      if((bit==nbit)||used[nbit])continue;
-      used[nbit] = 1;
-      for(int i=0;i<=B;i++)
-        for(int j=0;i+j<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp2[nx][j]);
-    }
-  }
+int dp3[1<<N][MAX_B];
+int used[1<<N];
+void DP3(int bit,int l,int r){
+  if(used[bit]) return;
+  used[bit] = 1;
+  if(bit == 0 || l >= r)return;
+  if(r - l == 1) return;
+  int bit_1 = getBit(bit,l,(l+r)/2);
+  int bit_2 = getBit(bit,(l+r)/2,r);
+  if(bit_1 == bit || bit_2 == bit) used[bit]=0;
+
+  DP3(bit_1,l,(l+r)/2), DP3(bit_2,(l+r)/2,r);
+
+  for(int i=0;i<=B;i++)
+    for(int j=0;i+j<=B;j++) Max(dp3[bit][i+j], dp3[bit_1][i] + dp3[bit_2][j]);
 }
 
 int solve(){
-  if(n == 1) n++,D[0][1] = INF;
   WF();
   DP1(dp1);
-  for(int i=0;i<n;i++) DP2(dp2[i],stores[i]);
-  int n_1 = n/2 ,n_2 = n/2 + n%2;
-  DP3(dp3_1,n_1,dp2);
-  DP3(dp3_2,n_2,&dp2[n_1]);
   
+  for(int i=0;i<n;i++) DP2(dp3[1<<i],stores[i]);
   int res = 0;
-  for(int i=1;i<(1<<n_1);i+=2)
-    for(int j=0;j<(1<<n_2);j++){
-      int bit = (j<<n_1) | i;
-      int B_ = min(B, A - dp1[bit][0]);
-      for(int k=0;k<=B_;k++){
-        int score = dp3_1[i][k] + dp3_2[j][B_ - k];
-        Max(res,score);        
-      }
-    }
+  for(int bit=1;bit<(1<<n);bit+=2){
+    DP3(bit,0,n);
+    int k = min(B,A-dp1[bit][0]);
+    if(k < 0)continue;
+    int score = dp3[bit][k];
+    Max(res,score);
+  }
   return res;  
 }
 
@@ -96,6 +95,9 @@ signed main(){
       stores[i].push_back((dat){a,b,c});
     }
   }
+
+  for(int i=0;i<N;i++)
+    for(int j=0;j<N;j++) D[i][j] = INF;
 
   for(int i=0;i<n;i++)
     for(int j=0;j<n;j++)cin>>D[i][j];
