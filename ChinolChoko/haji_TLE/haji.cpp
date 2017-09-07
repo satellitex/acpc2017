@@ -132,16 +132,14 @@ bool check(SCC &scc){
 }
 
 double calc(vector<dat> A){
-  int L=0,R=A.size();
-  while(L+1<R){
-    SCC scc(n+n);
-    int X = (L+R)/2;
-    for(int i=0;i<=X;i++)add_edge(A[i],scc);
-    if(!check(scc)) R = X;
-    else L = X;
-  }
-  return A[R].cost;
+  SCC scc(n+n);
+    for(dat a:A){
+      add_edge(a,scc);
+      if(!check(scc)) return a.cost;
+    }
+    return A.back().cost;
 }
+
 
 signed main(){
 
@@ -162,9 +160,9 @@ signed main(){
             for(int t=0;t<m;t++) Min(cost,getCost(i,j,k,l,s,t));
           A.push_back((dat){cost,i,j,k,l});
         }
-    }
+      }
   sort(A.begin(),A.end(),greater<dat>());
-  
   printf("%.8Lf\n",calc(A));
+    
   return 0;
 }
