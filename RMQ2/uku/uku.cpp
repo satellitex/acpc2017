@@ -15,7 +15,7 @@ typedef pair<int, int> Pi;
 typedef tuple<int, int, int> Ti;
 typedef vector<int> vint;
 
-const int inf = 1<<25;//1LL << 55;
+const int inf = INT_MAX;//1LL << 55;
 const int mod = 1e9 + 7;
 
 struct SegmentTree {
