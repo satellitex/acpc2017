@@ -32,7 +32,6 @@ struct BipartiteMatching{
     match.resize(V);
     used.resize(V);
     fill(match.begin(),match.end(),-1);
-    fill(used.begin(),used.end(),0);
   }
   
   void add_edge(int u,int v){
@@ -55,6 +54,7 @@ struct BipartiteMatching{
 
   int bipartite_matching(){
     int res=0;
+    fill(used.begin(),used.end(),0);
     for(int v=0;v<V;v++){
       if(match[v]<0){
 	if(dfs(v)){
