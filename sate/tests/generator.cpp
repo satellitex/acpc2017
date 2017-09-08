@@ -31,9 +31,10 @@ int main(int argc, char *argv[])
   registerGen(argc, argv, 1);
 
   for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
+    int s = rnd.next( MIN_S, MAX_S ), l = rnd.next( MIN_L, MAX_L );
     random_gen( format("50_random_%02d.in", t+1),
-                rnd.next( MIN_N, MAX_N ), rnd.next( MIN_S, MAX_S ),
-                rnd.next( MIN_W, MAX_W ), rnd.next( MIN_L, MAX_L ), rnd.next( S+L, MAX_R ),
+                rnd.next( MIN_N, MAX_N ), s,
+                rnd.next( MIN_W, MAX_W ), l, rnd.next( s+l, MAX_R ),
                 rnd.next( MIN_Z, MAX_Z ), rnd.next( MIN_Z, MAX_Z ),
                 rnd.next(MIN_V,MAX_V) );
   }

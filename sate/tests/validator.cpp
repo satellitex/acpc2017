@@ -48,6 +48,6 @@ int main(int argc, char *argv[])
   int Y = inf.readInt( MIN_Z, MAX_Z, "Z" );
   int V = inf.readInt( MIN_V, MAX_V, "V" );
   inf.readEof();
-  
+
   return 0;
 }
