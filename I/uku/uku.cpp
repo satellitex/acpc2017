@@ -114,6 +114,13 @@ struct SegmentTree {
   int Sum(int a, int b) {
     return Sum(a, b, 0, 0, sz);
   }
+  int Max(int a, int b, int k, int l, int r) {
+    if(r <= a || b <= l) return 0;
+    if(a <= l && r <= b) return sum[k];
+    int vl = Sum(a, b, 2*k+1, l, (l+r)/2);
+    int vr = Sum(a, b, 2*k+2, (l+r)/2, r);
+    return max(vl, vr);
+  }
 };
 
 int N, M, Q;
@@ -140,7 +147,7 @@ void dfs(int u, int p) {
     if(bicc.apt.count(id)) bi4nd[id] = idx;
     for(int& v : bicc.graph[id]) {
       if(!bicc.bridge.count(minmax(id, v))) continue;
-      if(bicc.cmp[v] == bicc.cmp[p]) continue;
+      if(p != -1 && bicc.cmp[v] == bicc.cmp[p]) continue;
       dfs(v, id);
     }
     if(bicc.apt.count(id)) ei4nd[id] = idx;

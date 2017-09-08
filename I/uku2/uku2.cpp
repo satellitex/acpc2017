@@ -139,13 +139,12 @@ signed main() {
     int x;
     cin >> x; --x;
     if(apt.count(x)) {
-      int ans = all;//sumc[cmp[root]];
+      int ans = all;
       if(brge.count(minmax(par[x], x))) ans -= sumc[cmp[x]];
       else ans -= sumv[x];
       ans = max({ans, w[x], maxv[x]});
       cout << ans << endl;
     } else {
-      //cout << sumv[root]-w[x] << endl;
       cout << all-w[x] << endl;
     }
   }
