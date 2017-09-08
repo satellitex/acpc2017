@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 #include <random>
-#include "../../uku1/tests/testlib.h"
+#include "../../I/tests/testlib.h"
 using namespace std;
 typedef pair<int,int> P;
 typedef pair<P,int> PP;
-int N=50,M=15;
+int N=200,M=15;
 int main(int argc, char* argv[]) {
   registerGen(argc, argv);
   for(int t=0; t<30; t++) {

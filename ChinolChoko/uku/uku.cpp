@@ -83,7 +83,7 @@ double dist(P a, P b) {
 
 const double inf = DBL_MAX/2;
 
-#define MAX_N 50
+#define MAX_N 200
 #define MAX_M 15
 
 int n, m;
