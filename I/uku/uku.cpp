@@ -1,117 +1,136 @@
-#include <iostream>
-#include <vector>
 #include <algorithm>
-#include <utility>
-#include <set>
+#include <iostream>
+#include <cassert>
 #include <cstring>
+#include <utility>
+#include <vector>
+#include <set>
+#include <map>
 
 using namespace std;
 
 #define int long long
+
 #define MAX_N 100000
 
 using Pi = pair<int, int>;
 using vint = vector<int>;
 using Graph = vector<vint>;
 
+namespace BICC {
+  vint low, ord, cmp;
+  set<int> apt;
+  set<Pi> brge;
+  int root;
+  void init(const Graph& g) {
+    int n = g.size();
+    low.clear();
+    low.resize(n);
+    ord.clear();
+    ord.resize(n);
+    cmp.clear();
+    cmp.resize(n, -1);
+    root = 0;
+    while(root < n-1 && g[root].size() == 1) root++;
+  }
+  void dfs(const Graph& g, int u, int p, int& k, vint& vis) {
+    vis[u] = 1;
+    ord[u] = low[u] = k++;
+    bool isapt = false;
+    int cnt = 0;
+    for(auto&& v : g[u]) {
+      if(!vis[v]) {
+	cnt++;
+	dfs(g, v, u, k, vis);
+	low[u] = min(low[u], low[v]);
+	if(~p && ord[u] <= low[v]) isapt = true;
+	if(ord[u] < low[v]) brge.insert(minmax(u, v));
+      } else if(v != p) {
+	low[u] = min(low[u], ord[v]);
+      }
+    }
+    if(p == -1 && cnt > 1) isapt = true;
+    if(isapt) apt.insert(u);
+  }
+  bool isarticulation(int u) {
+    return apt.count(u) > 0;
+  }
+  bool isbridge(int u, int v) {
+    return brge.count(minmax(u, v)) > 0;
+  }
+  void fillcmp(const Graph& g, int u, int k) {
+    if(~cmp[u]) return;
+    cmp[u] = k;
+    for(auto&& v : g[u]) {
+      if(!isbridge(u, v)) fillcmp(g, v, k);
+    }
+  }
+  Graph build(const Graph& g) {
+    init(g);
+    int n = g.size(), k = 0;
+    vint vis(n, 0);
+    dfs(g, root, -1, k, vis);
+    int sz = 0;
+    fillcmp(g, root, sz++);
+    for(auto&& e : brge) {
+      int u = e.first, v = e.second;
+      if(cmp[u] == -1) fillcmp(g, u, sz++);
+      if(cmp[v] == -1) fillcmp(g, v, sz++);
+    }
+    Graph t(sz);
+    for(auto&& e : brge) {
+      int u = e.first, v = e.second;
+      assert(~cmp[u] && ~cmp[v]);
+      t[cmp[u]].push_back(cmp[v]);
+      t[cmp[v]].push_back(cmp[u]);
+    }
+    return t;
+  }
+  int find(int u) {
+    return cmp[u];
+  }
+};
+
 int N, M, Q;
 vint w;
 
-Graph graph;
+Graph graph, tree;
 set<Pi> edge;
 
-// Biconnected Components
-vint low, ord, cmp;
-set<int> apt; // 関節点
-set<Pi> brge; // 橋
-Graph bicc; // 二重辺連結成分を構成する頂点集合
-int root; // 葉でない頂点を根とする
-void init4bicc() {
-  low.clear();
-  low.resize(N);
-  ord.clear();
-  ord.resize(N);
-  cmp.clear();
-  cmp.resize(N, -1);
-  root = 0;
-  //while(root < N-1 && graph[root].size() == 1) root++;
-}
-void dfs4bicc(int u, int p, int& k, vint& vis) {
-  vis[u] = 1;
-  ord[u] = low[u] = k++;
-  bool isapt = false;
-  int cnt = 0;
-  for(int& v : graph[u]) {
-    if(!vis[v]) {
-      cnt++;
-      dfs4bicc(v, u, k, vis);
-      low[u] = min(low[u], low[v]);
-      if(~p && ord[u] <= low[v]) isapt = true;
-      if(ord[u] < low[v]) brge.insert(minmax(u, v));
-    } else if(v != p) {
-      low[u] = min(low[u], ord[v]);
-    }
-  }
-  if(p == -1 && cnt > 1) isapt = true;
-  if(isapt) apt.insert(u);
-}
-void fillcmp(int u, int k, vint& vec) {
-  if(~cmp[u]) return;
-  cmp[u] = k;
-  vec.push_back(u);
-  for(int& v : graph[u]) {
-    if(!brge.count(minmax(u, v))) fillcmp(v, k, vec);
-  }
-}
-int BICC() {
-  init4bicc();
-  int k = 0;
-  vint vis(N, 0);
-  dfs4bicc(root, -1, k, vis);
-  int num = 0;
-  {
-    vint vec;
-    fillcmp(root, num++, vec);
-    bicc.push_back(vec);
-  }
-  for(Pi e : brge) {
-    if(cmp[e.first] == -1) {
-      vint vec;
-      fillcmp(e.first, num++, vec);
-      bicc.push_back(vec);
-    }
-    if(cmp[e.second] == -1) {
-      vint vec;
-      fillcmp(e.second, num++, vec);
-      bicc.push_back(vec);
-    }
-  }
-  return num;
-}
-
-// Tree DP
-// 頂点に関する部分木の重み和・最大重み
 int sumv[MAX_N];
 int maxv[MAX_N];
 int par[MAX_N];
-// 連結成分に関する部分木の重み和
 int sumc[MAX_N];
 void dfs(int u, int p) {
   par[u] = p;
-  for(int& id : bicc[cmp[u]]) {
-    sumv[id] = w[id];
-    sumc[cmp[id]] += w[id];
-    for(int& v : graph[id]) {
-      if((p != -1 && cmp[v] == cmp[p]) || cmp[u] == cmp[v]) continue;
-      if(!brge.count(minmax(id, v))) continue;
-      dfs(v, id);
-      sumv[id] += sumc[cmp[v]];
-      sumc[cmp[id]] += sumc[cmp[v]];
-      maxv[id] = max(maxv[id], sumc[cmp[v]]);
-    }
+  for(int& v : tree[u]) {
+    if(v == p) continue;
+    dfs(v, u);
+    sumc[u] += sumc[v];
   }
-  for(int& id : bicc[cmp[u]]) {
-    maxv[id] = max(maxv[id], sumc[cmp[id]]-sumv[id]);
+}
+set<int> st[MAX_N];
+void solve() {
+  for(auto&& e : BICC::brge) {
+    int u = e.first, v = e.second;
+    st[BICC::find(u)].insert(v);
+    st[BICC::find(v)].insert(u);
+  }
+  for(int i = 0; i < N; i++) {
+    sumv[i] = w[i];
+    sumc[BICC::find(i)] += w[i];
+  }
+  memset(par, -1, sizeof(par));
+  dfs(BICC::find(BICC::root), -1);
+  for(int i = 0; i < N; i++) {
+    if(!BICC::isarticulation(i)) continue;
+    int u = BICC::find(i);
+    for(int& v : tree[u]) {
+      if(v == par[u]) continue;
+      sumv[i] += sumc[v];
+      maxv[i] = max(maxv[i], sumc[v]);
+    }
+    maxv[i] = max(maxv[i], sumc[u]-sumv[i]);
   }
 }
 
@@ -131,19 +150,18 @@ signed main() {
     graph[v].push_back(u);
     edge.insert(minmax(u, v));
   }
-  BICC();
-  memset(par, -1, sizeof(par));
-  dfs(root, -1);
+  tree = BICC::build(graph);
+  solve();
   cin >> Q;
   while(Q--) {
     int x;
     cin >> x; --x;
-    if(apt.count(x)) {
+    if(BICC::isarticulation(x)) {
       int ans = all;
-      if(brge.count(minmax(par[x], x))) ans -= sumc[cmp[x]];
+      if(~par[BICC::find(x)] && st[par[BICC::find(x)]].count(x)) ans -= sumc[BICC::find(x)];
       else ans -= sumv[x];
-      ans = max({ans, w[x], maxv[x]});
-      cout << ans << endl;
+      //cout << ans << " " << w[x] << " "<<maxv[x]<<endl;
+      cout << max({ans, w[x], maxv[x]}) << endl;
     } else {
       cout << max(all-w[x], w[x]) << endl;
     }
