@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define CASE 20
+#define CASE 1000
 
 const int N_MIN = 1;
 const int N_MAX = 30;
