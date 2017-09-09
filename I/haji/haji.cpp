@@ -9,7 +9,6 @@ const double EPS = 1e-8;
 const double PI = 6.0 * asin(0.5);
 template<class T> T Max(T &a,T b){return a=max(a,b);}
 template<class T> T Min(T &a,T b){return a=min(a,b);}
-typedef pair<int,int> P;
 
 class Bridges{
 public:
@@ -58,10 +57,10 @@ class BCC{
 public:
   int V;                     // 頂点数
   int K;                     // 分解後の頂点数
-  Bridges B;                 // 橋の列挙
+  Bridges B;                 // 橋の列挙用
   vector<vector<int> > G;    // 元のグラフ
   vector<vector<int> > T;    // 分解後のグラフ(木)
-  vector<int> par;           // 分解後のグラフを0を根としたときの親
+  vector<int> par;           // 分解後のグラフの頂点0を根としたときの親
   vector<int> cmp;           // 元のグラフの分解後の頂点番号
   vector<int> used;          // dfs用
   
@@ -128,7 +127,7 @@ void calcAns(){
   for(int i=0;i<n;i++){
     int a = bcc.cmp[i];
     int s = sum[n] - val[i];
-    Max(ans[i], sum[a] - val[i]);
+    Max(ans[i], max(val[i],sum[a] - val[i]));
     
     //cout<<"i="<<i<<" a="<<a<<" ans[i]="<<ans[i]<<endl;
     for(int to:G[i]){

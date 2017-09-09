@@ -58,7 +58,7 @@ void init() {
 
 ll total=0;
 int vd[MAX_V];
-int mem[MAX_V];
+ll mem[MAX_V];
 
 ll solve(int x){
   
