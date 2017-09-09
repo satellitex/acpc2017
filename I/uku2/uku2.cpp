@@ -143,9 +143,10 @@ signed main() {
       if(brge.count(minmax(par[x], x))) ans -= sumc[cmp[x]];
       else ans -= sumv[x];
       ans = max({ans, w[x], maxv[x]});
+      cout << ans << " " << w[x] << " " << maxv[x] << endl;
       cout << ans << endl;
     } else {
-      cout << all-w[x] << endl;
+      cout << max(all-w[x], w[x]) << endl;
     }
   }
 
