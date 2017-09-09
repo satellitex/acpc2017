@@ -9,6 +9,8 @@
 
 using namespace std;
 
+#define int long long
+
 #define MAX_N 100000
 
 using Pi = pair<int, int>;
@@ -29,7 +31,7 @@ namespace BICC {
     cmp.clear();
     cmp.resize(n, -1);
     root = 0;
-    while(root < n && g[root].size() == 1) root++;
+    while(root < n-1 && g[root].size() == 1) root++;
   }
   void dfs(const Graph& g, int u, int p, int& k, vint& vis) {
     vis[u] = 1;
@@ -67,9 +69,7 @@ namespace BICC {
     init(g);
     int n = g.size(), k = 0;
     vint vis(n, 0);
-    cout<<"FILL"<<endl;
     dfs(g, root, -1, k, vis);
-    cout<<"FILL"<<endl;
     int sz = 0;
     fillcmp(g, root, sz++);
     for(auto&& e : brge) {
@@ -77,7 +77,6 @@ namespace BICC {
       if(cmp[u] == -1) fillcmp(g, u, sz++);
       if(cmp[v] == -1) fillcmp(g, v, sz++);
     }
-    cout<<"FILL"<<endl;
     Graph t(sz);
     for(auto&& e : brge) {
       int u = e.first, v = e.second;
@@ -135,7 +134,7 @@ void solve() {
   }
 }
 
-int main() {
+signed main() {
   cin >> N >> M;
   w.resize(N);
   int all = 0;
@@ -151,9 +150,7 @@ int main() {
     graph[v].push_back(u);
     edge.insert(minmax(u, v));
   }
-  cout << "OK"<<endl;
   tree = BICC::build(graph);
-  cout << "OK"<<endl;
   solve();
   cin >> Q;
   while(Q--) {
@@ -163,9 +160,10 @@ int main() {
       int ans = all;
       if(~par[BICC::find(x)] && st[par[BICC::find(x)]].count(x)) ans -= sumc[BICC::find(x)];
       else ans -= sumv[x];
+      //cout << ans << " " << w[x] << " "<<maxv[x]<<endl;
       cout << max({ans, w[x], maxv[x]}) << endl;
     } else {
-      cout << all-w[x] << endl;
+      cout << max(all-w[x], w[x]) << endl;
     }
   }
 

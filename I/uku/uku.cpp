@@ -204,7 +204,7 @@ signed main() {
       int ans3 = maxi[x];
       cout << max({ans1, ans2, ans3}) << endl;
     } else {
-      cout << all - w[x] << endl;
+      cout << max(w[x], all - w[x]) << endl;
     }
   }
 
