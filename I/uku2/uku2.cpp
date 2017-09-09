@@ -94,7 +94,7 @@ int BICC() {
 int sumv[MAX_N];
 int maxv[MAX_N];
 int par[MAX_N];
-// 連結成分に関する部分木の重み和・最大重み
+// 連結成分に関する部分木の重み和
 int sumc[MAX_N];
 void dfs(int u, int p) {
   par[u] = p;
