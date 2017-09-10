@@ -4,8 +4,8 @@
 #c_generator(src='generator.c')
 #cxx_generator(src='generator.cc')
 cxx_generator(src='gen_small.cpp')
-#cxx_generator(src='gen_random.cpp')
-#cxx_generator(src='gen_large.cpp')
+cxx_generator(src='gen_random.cpp')
+cxx_generator(src='gen_large.cpp')
 #java_generator(src='Generator.java', encoding='UTF-8', mainclass='Generator')
 #script_generator(src='generator.py')
 

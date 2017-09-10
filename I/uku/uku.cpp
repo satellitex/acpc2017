@@ -17,10 +17,33 @@ using Pi = pair<int, int>;
 using vint = vector<int>;
 using Graph = vector<vint>;
 
+struct UnionFind {
+  vint data;
+  UnionFind(int n):data(n, -1){}
+  int find(int x) {
+    return data[x] < 0 ? x : data[x] = find(data[x]);
+  }
+  int size(int x) {
+    return -data[find(x)];
+  }
+  bool same(int x, int y) {
+    return find(x) == find(y);
+  }
+  bool unite(int x, int y) {
+    x = find(x), y = find(y);
+    if(x == y) return false;
+    if(data[x] < data[y]) swap(x, y);
+    data[x] += data[y];
+    data[y] = x;
+    return true;
+  }
+};
+
 namespace BICC {
   vint low, ord, cmp;
   set<int> apt;
   set<Pi> brge;
+  vint par;
   int root;
   void init(const Graph& g) {
     int n = g.size();
@@ -30,6 +53,9 @@ namespace BICC {
     ord.resize(n);
     cmp.clear();
     cmp.resize(n, -1);
+    apt.clear();
+    brge.clear();
+    par.clear();
     root = 0;
     while(root < n-1 && g[root].size() == 1) root++;
   }
@@ -62,7 +88,7 @@ namespace BICC {
     if(~cmp[u]) return;
     cmp[u] = k;
     for(auto&& v : g[u]) {
-      if(!isbridge(u, v)) fillcmp(g, v, k);
+      fillcmp(g, v, k);
     }
   }
   Graph build(const Graph& g) {
@@ -70,21 +96,39 @@ namespace BICC {
     int n = g.size(), k = 0;
     vint vis(n, 0);
     dfs(g, root, -1, k, vis);
-    int sz = 0;
-    fillcmp(g, root, sz++);
-    for(auto&& e : brge) {
-      int u = e.first, v = e.second;
-      if(cmp[u] == -1) fillcmp(g, u, sz++);
-      if(cmp[v] == -1) fillcmp(g, v, sz++);
+    int col = 0;
+    for(auto&& a : apt) cmp[a] = col++;
+    for(auto&& a : apt) {
+      for(auto&& v : g[a]) {
+	if(~cmp[v]) continue;
+	par.push_back(a);
+	fillcmp(g, v, col++);
+      }
     }
-    Graph t(sz);
-    for(auto&& e : brge) {
-      int u = e.first, v = e.second;
-      assert(~cmp[u] && ~cmp[v]);
-      t[cmp[u]].push_back(cmp[v]);
-      t[cmp[v]].push_back(cmp[u]);
+    Graph t(col);
+    UnionFind uf(col);
+    for(auto&& a : apt) {
+      for(auto&& v : g[a]) {
+	if(isarticulation(v)) continue;
+	if(uf.same(cmp[a], cmp[v])) continue;
+	t[cmp[a]].push_back(cmp[v]);
+	t[cmp[v]].push_back(cmp[a]);
+	uf.unite(cmp[a], cmp[v]);
+      }
+    }
+    for(auto&& a : apt) {
+      for(auto&& v : g[a]) {
+	if(!isarticulation(v)) continue;
+	if(uf.same(cmp[a], cmp[v])) continue;
+	t[cmp[a]].push_back(cmp[v]);
+	t[cmp[v]].push_back(cmp[a]);
+	uf.unite(cmp[a], cmp[v]);
+      }
     }
     return t;
+  }
+  bool isarticulation2(int a) {
+    return 0 <= a && a < (int)apt.size();
   }
   int find(int u) {
     return cmp[u];
@@ -99,39 +143,26 @@ set<Pi> edge;
 
 int sumv[MAX_N];
 int maxv[MAX_N];
-int par[MAX_N];
 int sumc[MAX_N];
-void dfs(int u, int p) {
-  par[u] = p;
+int maxc[MAX_N];
+bool used[MAX_N];
+void dfs(int u) {
+  used[u] = true;
   for(int& v : tree[u]) {
-    if(v == p) continue;
-    dfs(v, u);
+    if(used[v]) continue;
+    dfs(v);
     sumc[u] += sumc[v];
+    maxc[u] = max(maxc[u], sumc[v]);
   }
 }
-set<int> st[MAX_N];
+
 void solve() {
-  for(auto&& e : BICC::brge) {
-    int u = e.first, v = e.second;
-    st[BICC::find(u)].insert(v);
-    st[BICC::find(v)].insert(u);
-  }
   for(int i = 0; i < N; i++) {
-    sumv[i] = w[i];
     sumc[BICC::find(i)] += w[i];
   }
-  memset(par, -1, sizeof(par));
-  dfs(BICC::find(BICC::root), -1);
-  for(int i = 0; i < N; i++) {
-    if(!BICC::isarticulation(i)) continue;
-    int u = BICC::find(i);
-    for(int& v : tree[u]) {
-      if(v == par[u]) continue;
-      sumv[i] += sumc[v];
-      maxv[i] = max(maxv[i], sumc[v]);
-    }
-    maxv[i] = max(maxv[i], sumc[u]-sumv[i]);
-  }
+  if(tree.empty()) return;
+  memset(used, false, sizeof(used));
+  dfs(BICC::find(BICC::root));
 }
 
 signed main() {
@@ -151,19 +182,24 @@ signed main() {
     edge.insert(minmax(u, v));
   }
   tree = BICC::build(graph);
+  for(int i = 0; i < N; i++) cout << i << " " << BICC::find(i) << endl;
+  for(int i = 0; i < (int)tree.size(); i++) {
+    cout << i << ":";
+    for(int& v : tree[i]) cout << v << " ";
+    cout << endl;
+  }
+
   solve();
   cin >> Q;
   while(Q--) {
     int x;
     cin >> x; --x;
     if(BICC::isarticulation(x)) {
-      int ans = all;
-      if(~par[BICC::find(x)] && st[par[BICC::find(x)]].count(x)) ans -= sumc[BICC::find(x)];
-      else ans -= sumv[x];
-      //cout << ans << " " << w[x] << " "<<maxv[x]<<endl;
-      cout << max({ans, w[x], maxv[x]}) << endl;
+      int X = BICC::find(x);
+      cout << max({w[x], all-sumc[X], maxc[X]}) << endl;
+      cout << w[x] << " " << sumc[X] << " " << all-sumc[X] << " " << maxc[X] << endl;
     } else {
-      cout << max(all-w[x], w[x]) << endl;
+      //cout << max(w[x], all-w[x]) << endl;
     }
   }
 
