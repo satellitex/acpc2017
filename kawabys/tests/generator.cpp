@@ -5,7 +5,7 @@ using namespace std;
 
 typedef long long ll;
 
-#define CASE_NUM 20
+#define CASE_NUM 40
 const int MIN_N = 1;
 const int MAX_N = 1e5;
 const int MIN_X = 1;
