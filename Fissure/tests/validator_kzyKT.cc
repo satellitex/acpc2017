@@ -8,8 +8,7 @@ int main() {
   inf.readEoln();
   ensure(n%2==1);
   for(int i=0; i<n; i++) {
-    string s=inf.readToken("[ox]*");
-    ensure(s.size()==n);
+    string s=inf.readToken(format("[ox]{%d}",n));
     inf.readEoln();
   }
   inf.readEof();
