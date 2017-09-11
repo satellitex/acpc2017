@@ -12,6 +12,5 @@ main(){
   }
   for(auto &a:x)
     y=min(y,a);
-  for(;k<360;++k)
-    x[k]-y||cout<<k/30+1<<' '<<k%30+1<<endl;
+  cout<<y<<endl;
 }
