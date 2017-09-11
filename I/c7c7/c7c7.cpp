@@ -35,6 +35,6 @@ main(){
 			if(ord[i]>low[v_[i][j]])sum+=cost[v_[i][j]];
 			else ans=max(ans,cost[v_[i][j]]);
 		}
-		cout<<max(ans,sum)<<endl;
+		printf("%ld\n",max(ans,sum));
 	}
 }//解法を聞いたためsolved(?)
