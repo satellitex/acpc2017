@@ -137,16 +137,12 @@ signed main() {
   }
   */
   solve();
-  cin >> Q;
-  while(Q--) {
-    int x;
-    cin >> x; --x;
-    if(bicc.isarticulation(x)) {
-      int id = bicc.find(x);
-      //cout << all << " " << w[x] << " " << sum[id] << " " << all-sum[id] << " " << maxi[id] << endl;
-      cout << max({w[x], all-sum[id], maxi[id]}) << endl;
+  for(int i = 0; i < N; i++) {
+    if(bicc.isarticulation(i)) {
+      int id = bicc.find(i);
+      cout << max(all-sum[id], maxi[id]) << endl;
     } else {
-      cout << max(w[x], all-w[x]) << endl;
+      cout << all-w[i] << endl;
     }
   }
 

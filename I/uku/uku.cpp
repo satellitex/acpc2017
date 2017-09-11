@@ -113,15 +113,11 @@ signed main() {
   }
   tree = bicc.build(graph);
   solve();
-  cin >> Q;
-  while(Q--) {
-    int x;
-    cin >> x; --x;
-    if(bicc.isarticulation(x)) {
-      //cout << w[x] << " " << all << " " << sum[x] << " " << maxi[x] << endl;
-      cout << max({w[x], all-sum[x], maxi[x]}) << endl;
+  for(int i = 0; i < N; i++) {
+    if(bicc.isarticulation(i)) {
+      cout << max(all-sum[i], maxi[i]) << endl;
     } else {
-      cout << max(w[x], all-w[x]) << endl;
+      cout << all-w[i] << endl;
     }
   }
 
