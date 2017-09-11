@@ -22,9 +22,9 @@ int lowlink_ant_Lib(int p, int par) {
 main(){
 	memset(ord,-1,sizeof(ord));
 	cin>>n>>m;
-	r(i,n)scanf("%d",&a[i]);
+	r(i,n)cin>>a[i];
 	r(i,m){
-		scanf("%d%d",&x,&y);
+		cin>>x>>y;
 		v[--x].push_back(--y);
 		v[y].push_back(x);
 	}
