@@ -24,10 +24,13 @@ int main() {
   for(int i = 0; i < 360; i++) {
     mn = min(mn, jam[i]);
   }
+  /*
   for(int i = 0; i < 360; i++) {
     if(mn == jam[i]) {
       cout << i/30+1 << " " << i%30+1 << endl;
     }
   }
+  */
+  cout << mn << endl;
   return 0;
 }
