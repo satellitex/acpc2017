@@ -31,6 +31,10 @@ int main(void){
     ll bundle = L/X;
     ll bundle_rest = L%X;
     ll bundle_sum = 0;
+    if(bundle_rest == 0){
+      bundle--;
+      bundle_rest = X;
+    }
 
 
     // Init
@@ -60,6 +64,23 @@ int main(void){
         if( removing != N - bundle - 1){
             ll right_a = a.at(adding+1), right_d = d.at(adding+1);
 
+            // l: the number of terms used by left-side sequence.
+            ll l = 0, r = bundle_rest + 1;
+            while(l+1 < r){
+              ll mid = (l+r)/2;
+              ll sum1 = sum(mid, left_a, left_d) + sum(bundle_rest-mid, right_a, right_d);
+              ll sum0 = sum(mid-1, left_a, left_d) + sum(bundle_rest-(mid-1), right_a, right_d);
+              if(sum1 - sum0 > 0){
+                l = mid;
+              }else{
+                r = mid;
+              }
+            }
+            ll left_range = l;
+            ll right_range = bundle_rest - l;
+            ans = max(ans, bundle_sum + sum(left_range, left_a, left_d) + sum(right_range, right_a, right_d));
+
+            /*
             ll l = 0, r = X;
             while(l+1 < r){
                 ll mid = (l+r)/2;
@@ -73,6 +94,7 @@ int main(void){
             ll left_range = min(bundle_rest, l);
             ll right_range = bundle_rest - left_range;
             ans = max(ans, bundle_sum + sum(left_range, left_a, left_d) + sum(right_range, right_a, right_d));
+            */
         }else{
             ans = max(ans, bundle_sum + sum(bundle_rest, left_a, left_d));
         }
