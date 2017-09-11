@@ -1,0 +1,78 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<h1>Problem K: Chinol Choco</h1>
+<h2>Problem</h2>
+
+<p>
+チョコレート会社チノルチョコは新しい店を<var>n</var>店建てることにした。<br>
+それぞれの店は各店長に建てたい場所の候補を2つ用意してもらい、どちらかの場所に建てる。
+</p>
+<p>
+チノルチョコでは<var>m</var>種類のチョコレートを販売しており、それぞれ別の工場で製造している。<br>
+すべての店で全種類のチョコレートを販売する。<br>
+チノルチョコではチョコレートを搬送するためのトラックを1台しか所有していなく、1台のトラックでは1店分のチョコレートしか運べないので、店から別の店へ移動する際に工場をすべてを回ってチョコレートを回収してから移動する。
+</p>
+<p>
+ある店から別の店へ移動する時の移動距離の最大が最小になるように配置した時の最大の移動距離を求めよ。
+</p>
+<h2>Input</h2>
+
+<pre>
+<var>n</var> <var>m</var>
+<var>a</var><sub>0</sub> <var>b</var><sub>0</sub> <var>c</var><sub>0</sub> <var>d</var><sub>0</sub>
+...
+<var>a</var><sub><var>n</var> &minus; 1</sub> <var>b</var><sub><var>n</var> &minus; 1</sub> <var>c</var><sub><var>n</var> &minus; 1</sub> <var>d</var><sub><var>n</var> &minus; 1</sub>
+<var>x</var><sub>0</sub> <var>y</var><sub>0</sub>
+...
+<var>x</var><sub><var>m</var> &minus; 1</sub> <var>y</var><sub><var>m</var> &minus; 1</sub>
+</pre>
+
+<p>
+入力はすべて整数で与えられる。<br>
+1行目にチノルチョコの店の数<var>n</var>、チョコレートを製造している工場の数<var>m</var>が空白区切りで与えられる。<br>
+2行目から<var>n</var>行にそれぞれの店を建てる場所の候補の座標(<var>a<sub>i</sub></var>,<var>b<sub>i</sub></var>),(<var>c<sub>i</sub></var>,<var>d<sub>i</sub></var>)が空白区切りで与えられる。<br>
+2 &plus; <var>n</var>行目から<var>m</var>行に工場の座標(<var>x<sub>i</sub></var>,<var>y<sub>i</sub></var>)が空白区切りで与えられる。
+</p>
+
+<h2>Constraints</h2>
+<p>
+入力は以下の条件を満たす。
+</p>
+<ul>
+  <li>2 &le; <var>n</var> &le; 200</li>
+  <li>1 &le; <var>m</var> &le; 15</li>
+  <li>0 &le; <var>a<sub>i</sub></var>,<var>b<sub>i</sub></var>,<var>c<sub>i</sub></var>,<var>d<sub>i</sub></var>,<var>x<sub>i</sub></var>,<var>y<sub>i</sub></var> &le; 1000</li>
+</ul>
+
+<h2>Output</h2>
+<p>
+移動距離の最大が最小になるように配置した時の最大の移動距離を出力せよ。<br>
+誤差が10<sup>&minus; 6</sup>を超えてはならない。
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+2 1
+0 0 5 5
+3 3 6 6
+2 2
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+4.2426406871
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+2 2
+0 0 6 0
+7 0 3 0
+4 0
+5 0
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+3.0000000000
+</pre>
