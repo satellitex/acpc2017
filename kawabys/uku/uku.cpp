@@ -36,7 +36,7 @@ int main() {
       while(lb+1 < ub) {
 	ll mb = (lb+ub)/2;
 	if(Sum1(i-1, X-mb, mb)+Sum1(i+n, 0, l-mb) > tmp1) ub = mb;
-	else lb = ub;
+	else lb = mb;//ub;
       }
       tmp3 = Sum1(i-1, X-ub, ub)+Sum1(i+n, 0, l-ub);
     }
