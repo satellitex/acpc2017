@@ -48,15 +48,10 @@ signed main() {
     graph[u].push_back(v);
     graph[v].push_back(u);
   }
-  cin >> Q;
-  while(Q--) {
-    int x;
-    cin >> x; --x;
-    //if(x < 13870 || 13880 < x) continue;
-    //if(x != 13878) continue;
-    int ans = w[x];
-    for(int& v : graph[x]) {
-      ans = max(ans, solve(v, x));
+  for(int i = 0; i < N; i++) {
+    int ans = 0;
+    for(int& v : graph[i]) {
+      ans = max(ans, solve(v, i));
     }
     cout << ans << endl;
   }
