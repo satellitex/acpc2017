@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define long long
+#define int long long
 #define r(i,n) for(int i=0;i<n;i++)
 #define MAX 100001
 int ord[MAX],low[MAX],cost[MAX],a[MAX],n,m,x,y,o;
@@ -22,9 +22,9 @@ int lowlink_ant_Lib(int p, int par) {
 main(){
 	memset(ord,-1,sizeof(ord));
 	cin>>n>>m;
-	r(i,n)cin>>a[i];
+	r(i,n)scanf("%d",&a[i]);
 	r(i,m){
-		cin>>x>>y;
+		scanf("%d%d",&x,&y);
 		v[--x].push_back(--y);
 		v[y].push_back(x);
 	}
