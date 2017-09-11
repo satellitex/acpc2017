@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
+#define int long int
 #define r(i,n) for(int i=0;i<n;i++)
 #define MAX 100001
 int ord[MAX],low[MAX],cost[MAX],a[MAX],n,m,x,y,o;
