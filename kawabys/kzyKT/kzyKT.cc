@@ -32,24 +32,8 @@ int main() {
       if(d1<d2) l=m1;
       else r=m2;
     }
-    for(int j=l; j<=r; j++) {
-      ll sum=calc(i,j);
-      ans=max(ans,calc(i,j));
-    }
+    for(int j=l; j<=r; j++) ans=max(ans,calc(i,j));
   }
   cout << ans << endl;
-  return 0;
-  vector<ll> v;
-  for(int i=0; i<n; i++) {
-    for(int j=0; j<m; j++) v.push_back(calc2(a[i],b[i],j));
-  }
-  for(int i=0; i<v.size(); i++) {
-    ll sum=0;
-    for(int j=0; j<t; j++) {
-      if(i+j>=v.size()) return 0;
-      sum+=v[i+j];
-    }
-    cerr << i << " " << sum << " " << calc(i/m,i%m) << endl;
-  }
   return 0;
 }
