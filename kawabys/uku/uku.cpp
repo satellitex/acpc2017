@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <cassert>
 
 using namespace std;
 
@@ -9,58 +10,49 @@ using ll = long long;
 
 int main() {
   ll N, X, L;
-  ll a[MAX_N], d[MAX_N];
+  ll a[MAX_N+1], d[MAX_N+1];
   cin >> N >> X >> L;
   for(int i = 0; i < N; i++) cin >> a[i] >> d[i];
-  auto Sum1 = [&](int i, int y, int x) {return (a[i]+y*d[i]+a[i]+(y+x-1)*d[i])*x/2;};
-  if(L < 2*X) {
-    ll ans = 0;
-    for(int i = 0; i < N; i++) {
-      ll tmp1 = 0, tmp2 = 0, tmp3 = 0;
-      tmp1 = Sum1(i, max(0ll, X-L), min(X, L));
-      if(i+1 < N) tmp1 += Sum1(i+1, 0, max(0ll, L-min(X, L)));
-      if(i+1 < N) tmp2 = Sum1(i+1, 0, min(X, L));
-      tmp2 += Sum1(i, max(0ll, X-(L-min(L, X))), max(0ll, L-min(L, X)));
-      if(i+1 < N) {
-	ll lb = 0, ub = L;
-	while(lb+1 < ub) {
-	  ll mb = (lb+ub)/2;
-	  if(Sum1(i, max(0ll, X-mb), min(X, mb))+Sum1(i+1, 0, min(X, L-mb)) > tmp1) ub = mb;
-	  else lb = mb;
-	}
-	tmp3 = Sum1(i, X-ub, ub)+Sum1(i+1, 0, L-ub);
-      }
-      //cout << tmp1 << " " << tmp2 << " " << tmp3 << endl;
-      ans = max({ans, tmp1, tmp2, tmp3});
-    }
-    cout << ans << endl;
-    return 0;
-  }
-  ll asum[MAX_N+1] = {};
-  for(int i = 0; i < N; i++) asum[i+1] = asum[i]+Sum1(i, 0, X);
-  auto Sum2 = [&](int l, int r) {return asum[r]-asum[l];};
-  ll l = L%X, n = L/X;
-  if(l == 0) {
-    n--;
-    l += X;
-  }
+
+  auto f = [&](ll i, ll j, ll n) {
+    if(i >= N) return 0ll;
+    return (a[i]+j*d[i] + a[i]+(j+n-1)*d[i])*n/2;
+  };
+  ll asum[MAX_N+1];
+  for(int i = 0; i < N; i++) asum[i+1] = asum[i]+f(i, 0, X);
+  auto g = [&](ll i, ll j, ll n) {
+    ll x = min(X-j, n), y = n-x, l = y/X, m = y%X;
+    //if(n <= X-j) return f(i, j, x);
+    if((N-i)*X < L) return 0ll;
+    return f(i, j, x)+asum[i+1+l]-asum[i+1]+f(i+1+l, 0, m);
+  };
+
   ll ans = 0;
-  for(int i = 0; i <= N-n; i++) {
-    ll tmp1 = 0, tmp2 = 0, tmp3 = 0;
-    if(i > 0) tmp1 = Sum1(i-1, X-l, l);
-    if(i+n < N) tmp2 = Sum1(i+n, 0, l);
-    if(i > 0 && i+n < N) {
-      ll lb = 0, ub = l;
+  for(int i = 0; i < N; i++) {
+    //if((N-i)*X < L) break;
+    ll sum = g(i, max(0ll, X-L), L);
+    if(i > 0) {
+      ll lb = max(0ll, X-L), ub = X;
       while(lb+1 < ub) {
-	ll mb = (lb+ub)/2;
-	if(Sum1(i-1, X-mb, mb)+Sum1(i+n, 0, l-mb) > tmp1) ub = mb;
-	else lb = mb;
+	int mb = (lb+ub)/2;
+	if(g(i-1, mb, L)-g(i-1, mb-1, L) < 0) lb = mb;
+	else ub = mb;
       }
-      tmp3 = Sum1(i-1, X-ub, ub)+Sum1(i+n, 0, l-ub);
+      ll minimal = lb;
+      auto findmax = [&](int lb, int ub) {
+	while(lb+1 < ub) {
+	  int mb = (lb+ub)/2;
+	  if(g(i-1, mb, L)-g(i-1, mb-1, L) > 0) lb = mb;
+	  else ub = mb;
+	}
+	return g(i-1, lb, L);
+      };
+      sum = max(sum, findmax(max(0ll, X-L), minimal));
+      sum = max(sum, findmax(minimal, X));
     }
-    ans = max(ans, Sum2(i, i+n)+max({tmp1, tmp2, tmp3}));
-    //cout << i << " " << tmp1 << " " << tmp2 << " " << tmp3 << " " << Sum2(i, i+n) << " " << ans << endl;
+    ans = max(ans, sum);
   }
   cout << ans << endl;
+
   return 0;
 }
