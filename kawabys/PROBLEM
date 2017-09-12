@@ -8,5 +8,6 @@
 problem(title = "arithmetic progression",
         id = "F",
         time_limit = 1.0,
-        reference_solution='dohatsu'
+        #reference_solution='dohatsu'
+        reference_solution='uku_tle'
 )
