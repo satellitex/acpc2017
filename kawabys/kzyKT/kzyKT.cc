@@ -4,12 +4,12 @@ typedef long long ll;
 
 ll calc1(ll a,ll d,ll n) {return (a*2+(n-1)*d)*n/2;}
 ll calc2(ll a,ll d,ll n) {return calc1(a,d,n+1)-calc1(a,d,n);}
-ll n,m,t,a[111111],b[111111],c[111111],d[111111];
+ll n,m,t,a[111111],b[111111],c[111111],d[111111],e[111111];
 
 ll calc(ll k,ll mid) {
   ll sum=calc1(calc2(a[k],b[k],mid),b[k],m-mid);
   if(c[k]+t+mid>n*m) return -1;
-  ll l=lower_bound(c,c+n,c[k]+t+mid)-c;
+  ll l=k+e[mid];
   sum+=d[l-1]-d[k+1];
   sum+=calc1(a[l-1],b[l-1],t-m*(l-k-1)+mid);
   return sum;
@@ -23,6 +23,7 @@ int main() {
     c[i+1]+=c[i]+m;
     d[i+1]+=d[i]+calc1(a[i],b[i],m);
   }
+  for(int i=0; i<=m; i++) e[i]=lower_bound(c,c+n,t+i)-c;
   ll ans=0;
   for(int i=0; i<n; i++) {
     ll l=max(0LL,m-t),r=m;
