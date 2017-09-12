@@ -58,36 +58,45 @@ int main(void){
         bundle_sum += sum(X, a.at(adding),   d.at(adding)  );
 
         ll left_a  = a.at(removing), left_d  = d.at(removing);
+        left_a = left_a + (X-1)*left_d;
+        left_d = -left_d;
 
         if( removing != N - bundle - 1){
             ll right_a = a.at(adding+1), right_d = d.at(adding+1);
 
-            // l: the number of terms used by right-side sequence.
-            ll l = 0, r = bundle_rest;
+            // l: the number of terms used by left-side sequence.
+            ll l = 0, r = bundle_rest + 1;
             while(l+1 < r){
               ll mid = (l+r)/2;
-              ll b_mid = right_a + mid * right_d;
-              ll a_mid = left_a + (X - bundle_rest + mid) * left_d;
-              //cout << a_mid << " " << b_mid << endl;
-              if( b_mid - a_mid + (left_a - right_a) >= 0 ){
+              ll sum1 = sum(mid, left_a, left_d) + sum(bundle_rest-mid, right_a, right_d);
+              ll sum0 = sum(mid-1, left_a, left_d) + sum(bundle_rest-(mid-1), right_a, right_d);
+              if(sum1 - sum0 > 0){
                 l = mid;
               }else{
                 r = mid;
               }
             }
-            // l: the beginning of taking sum.
-            ll left_begin = left_a + left_d*(X - bundle_rest + l + 1);
-            //cout << "left_begin=" << left_begin << endl;
-            ll left_num = bundle_rest - l - 1;
-            ans = max(ans, bundle_sum + sum(left_num, left_begin, left_d) + sum(l+1, right_a, right_d));
+            ll left_range = l;
+            ll right_range = bundle_rest - l;
+            ans = max(ans, bundle_sum + sum(left_range, left_a, left_d) + sum(right_range, right_a, right_d));
 
-            left_a = left_a + (X-1)*left_d;
-            left_d = -left_d;
-            ans = max(ans, bundle_sum + sum(bundle_rest, left_a, left_d));
+            /*
+            ll l = 0, r = X;
+            while(l+1 < r){
+                ll mid = (l+r)/2;
+                ll mid_member = left_a + (mid-1)*left_d;
+                if(mid_member < right_a){
+                    r = mid;
+                }else{
+                    l = mid;
+                }
+            }
+            ll left_range = min(bundle_rest, l);
+            ll right_range = bundle_rest - left_range;
+            ans = max(ans, bundle_sum + sum(left_range, left_a, left_d) + sum(right_range, right_a, right_d));
+            */
         }else{
-          left_a = left_a + (X-1)*left_d;
-          left_d = -left_d;
-          ans = max(ans, bundle_sum + sum(bundle_rest, left_a, left_d));
+            ans = max(ans, bundle_sum + sum(bundle_rest, left_a, left_d));
         }
     }
 
