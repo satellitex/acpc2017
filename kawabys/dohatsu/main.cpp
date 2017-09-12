@@ -14,10 +14,12 @@ ll a[MAX_N],d[MAX_N];
 ll solve2();
 
 ll solve(){
+  
   if(L<=X)return solve2();
 
   ll res=0, val=0;
 
+  
   int j=0;
   for(int i=0;i<N;i++){
     while( j < i+L/X ){
@@ -25,6 +27,7 @@ ll solve(){
       j++;
       if(j>=N)break;
     }
+    res=max(res,val);
     if(j>=N)break;
 
 
