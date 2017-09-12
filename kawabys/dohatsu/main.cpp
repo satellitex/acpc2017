@@ -49,13 +49,13 @@ ll solve(){
     res=max(res, val + calc(a[j],d[j],X) - calc(a[i],d[i],X-L%X) );
     
     long long mm = left;
-    
+    /*
     cout<<"i="<<i<<" j="<<j<<endl;
     cout<<"val="<<val<<endl;
     cout<<"mm="<<mm<<endl;
     cout<<val + calc(a[j],d[j],L%X)<<endl;
     cout<<endl;
-    
+    */
     
     for( long long  dm = mm-1; dm<=mm+1; dm++ ){
       if(dm<0 || dm>(X-L%X) )continue;
