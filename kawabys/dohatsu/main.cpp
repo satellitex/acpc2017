@@ -14,8 +14,6 @@ ll a[MAX_N],d[MAX_N];
 ll solve2();
 
 ll solve(){
-  
-  if(L<=X)return solve2();
 
   ll res=0, val=0;
 
@@ -27,12 +25,9 @@ ll solve(){
       j++;
       if(j>=N)break;
     }
+    
     res=max(res,val);
     if(j>=N)break;
-
-
-    //  cout<<"i="<<i<<" j="<<j<<endl;
-    //    cout<<"val="<<val<<endl;
     
     ll aj =a[j]+(L%X)*d[j];
     double A = -0.5*d[i] + 0.5*d[j];
@@ -54,13 +49,13 @@ ll solve(){
     res=max(res, val + calc(a[j],d[j],X) - calc(a[i],d[i],X-L%X) );
     
     long long mm = left;
-    /*
+    
     cout<<"i="<<i<<" j="<<j<<endl;
     cout<<"val="<<val<<endl;
     cout<<"mm="<<mm<<endl;
     cout<<val + calc(a[j],d[j],L%X)<<endl;
     cout<<endl;
-    */
+    
     
     for( long long  dm = mm-1; dm<=mm+1; dm++ ){
       if(dm<0 || dm>(X-L%X) )continue;
