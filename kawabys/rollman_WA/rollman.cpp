@@ -102,7 +102,7 @@ int main(void){
         Seq right_s = s[adding+1];
 
         // l: the idx of terms used by right-side sequence.
-        ll l = 0, r = bundle_res;
+        ll l = 0, r = bundle_rest;
         while(l+1 < r){
           ll mid = (l+r)/2;
           /* 
