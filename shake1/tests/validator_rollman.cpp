@@ -1,21 +1,16 @@
 #include <iostream>
 #include <vector>
 #include "testlib.h"
-
 using namespace std;
+typedef long long ll;
 
-
+const ll MIN_n = 1;
+const ll MAX_n = 1e18;
 
 void input() {
-  /*
-  N = inf.readInt(MIN_N, MAX_N, "N");
+  ll n = inf.readLong(MIN_n, MAX_n, "N");
   inf.readEoln();
-  for(int i = 0; i < N; i++) {
-    a[i] = inf.readInt(MIN_A, MAX_A, format("a[%d]", i+1));
-    inf.readEoln();
-  }
   inf.readEof();
-  */
 }
 
 void check() {
