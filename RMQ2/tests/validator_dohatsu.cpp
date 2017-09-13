@@ -44,6 +44,7 @@ int main(){
       inf.readSpace();
       z=inf.readInt(1,N);
       inf.readEoln();
+      assert(y<=z);
     }
 
     if(x==5||x==6){
