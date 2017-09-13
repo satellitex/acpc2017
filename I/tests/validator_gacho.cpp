@@ -47,6 +47,8 @@ void input(){
     inf.readEoln();
     
   }
+
+  inf.readEof();
   
 }
 
