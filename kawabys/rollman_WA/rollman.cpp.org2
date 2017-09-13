@@ -3,10 +3,42 @@ using namespace std;
 
 typedef long long ll;
 
-ll sum(const ll n, const ll a, const ll d){
-    return (2*a + (n-1)*d)*n/2;
+struct Seq{
+  ll a;
+  ll d;
+
+  Seq():a(0),d(0){}
+  Seq(const ll a, const ll d):a(a),d(d){}
+
+  ll sum(const ll num){
+    return (2*a + (num-1)*d)*num/2;
+  }
+};
+
+ll getSegSum(const ll num, const ll left_begin_idx, const Seq left_, const Seq right_, const ll X){
+  Seq left(left_.a + left_.d*left_begin_idx, left_.d);
+  Seq right = right_;
+
+  ll res = 0;
+  ll left_num = min(num, X-left_begin_idx);
+  ll right_num = num-left_num;
+  assert(right_num <= X);
+  res += left.sum( left_num );
+  res += right.sum( right_num);
+  return res;
 }
 
+#ifdef EBUG
+int main(void){
+  Seq a(1, 1);
+  Seq b(2, 2);
+  for(int i = 0; i < 3; i++){
+    cout << getSegSum(4, i, a, b, 3) << endl;
+  }
+  return 0;
+}
+
+#else
 int main(void){
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -31,10 +63,8 @@ int main(void){
     ll bundle = L/X;
     ll bundle_rest = L%X;
     ll bundle_sum = 0;
-    if(bundle_rest == 0){
-      bundle--;
-      bundle_rest = X;
-    }
+    bundle--;
+    bundle_rest += X;
 
 
     // Init
@@ -80,6 +110,9 @@ int main(void){
             //cout << "left_begin=" << left_begin << endl;
             ll left_num = bundle_rest - l - 1;
             ans = max(ans, bundle_sum + sum(left_num, left_begin, left_d) + sum(l+1, right_a, right_d));
+            if(left_num+1 <= X){
+              ans = max(ans, bundle_sum + sum(left_num+1, left_begin-left_d, left_d) + sum(l, right_a, right_d));
+            }
 
             left_a = left_a + (X-1)*left_d;
             left_d = -left_d;
@@ -107,3 +140,4 @@ int main(void){
     cout << ans << endl;
     return 0;
 }
+#endif
