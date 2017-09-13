@@ -5,6 +5,8 @@
 #cxx_generator(src='generator.cc')
 cxx_generator(src='generator.cpp')
 cxx_generator(src='generator_small.cpp')
+cxx_generator(src='generator_max1.cpp')
+cxx_generator(src='generator_max2.cpp')
 #java_generator(src='Generator.java', encoding='UTF-8', mainclass='Generator')
 #script_generator(src='generator.py')
 
