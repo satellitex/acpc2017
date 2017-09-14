@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define CASE 1000
+#define CASE 10
 
 const int N_MIN = 1;
 const int N_MAX = 30;
@@ -34,11 +34,6 @@ void start(int id) {
     }
     fout << u << " " << v << endl;
     st.insert(minmax(u, v));
-  }
-  int Q = N;
-  fout << Q << endl;
-  for(int i = 0; i < Q; i++) {
-    fout << i+1 << endl;
   }
 }
 

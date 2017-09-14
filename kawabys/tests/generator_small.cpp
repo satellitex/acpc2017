@@ -5,16 +5,16 @@ using namespace std;
 
 typedef long long ll;
 
-#define CASE_NUM 5
+#define CASE_NUM 10
 const int MIN_N = 1;
 const int MAX_N = 5;
 const int MIN_X = 1;
 const int MAX_X = 3;
 
 const int MIN_a = 0;
-const int MAX_a = 3;
+const int MAX_a = 4;
 const int MIN_d = 1;
-const int MAX_d = 3;
+const int MAX_d = 4;
 
 const ll MIN_L = 1;
 

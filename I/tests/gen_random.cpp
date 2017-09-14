@@ -3,14 +3,13 @@
 
 using namespace std;
 
-#define CASE 50
+#define CASE 20
 
 const long long N_MIN = 1;
 const long long N_MAX = 100000;
 const long long M_MAX = 100000;
 const long long W_MIN = 1;
 const long long W_MAX = 1000000;
-const long long Q_MAX = 100000;
 
 void start(int id) {
   ofstream fout(format("03_random_%02d.in", id).c_str());
@@ -45,15 +44,6 @@ void start(int id) {
   shuffle(vid.begin(), vid.end(), engine);
   for(int i = 0; i < M; i++) {
     fout << vid[u[i]-1] << " " << vid[v[i]-1] << endl;
-  }
-  long long Q = rnd.next(N, Q_MAX);
-  fout << Q << endl;
-  for(int i = 0; i < N; i++, Q--) {
-    fout << i+1 << endl;
-  }
-  while(Q > 0) {
-    fout << rnd.next(1LL, N) << endl;
-    Q--;
   }
 }
 

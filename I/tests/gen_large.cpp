@@ -37,11 +37,6 @@ void start(int id) {
     fout << u << " " << v << endl;
     st.insert(minmax(u, v));
   }
-  long long Q = N;
-  fout << Q << endl;
-  for(int i = 0; i < Q; i++) {
-    fout << i+1 << endl;
-  }
 }
 
 int main(int argc, char* argv[]) {

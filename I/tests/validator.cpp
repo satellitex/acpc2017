@@ -8,13 +8,10 @@ const long long N_MAX = 100000;
 const long long M_MAX = 100000;
 const long long W_MIN = 1;
 const long long W_MAX = 1000000;
-const long long Q_MIN = 1;
-const long long Q_MAX = 100000;
 
-long long N, M, Q;
+long long N, M;
 long long w[N_MAX];
 long long u[M_MAX], v[M_MAX];
-long long x[Q_MAX];
 
 struct UnionFind {
   vector<int> data;
@@ -48,12 +45,6 @@ void input() {
     u[i] = inf.readInt(1, N, format("u[%d]", i+1));
     inf.readSpace();
     v[i] = inf.readInt(1, N, format("v[%d]", i+1));
-    inf.readEoln();
-  }
-  Q = inf.readInt(Q_MIN, Q_MAX, "Q");
-  inf.readEoln();
-  for(int i = 0; i < Q; i++) {
-    x[i] = inf.readInt(1, N, format("x[%d]", i+1));
     inf.readEoln();
   }
   inf.readEof();

@@ -9,6 +9,7 @@ cxx_generator(src='generator.cc')
 ## Input validators.
 #c_validator(src='validator.c')
 cxx_validator(src='validator.cc')
+cxx_validator(src='validator_sate.cpp')
 #java_validator(src='Validator.java', encoding='UTF-8', mainclass='Validator')
 #script_validator(src='validator.py')
 
