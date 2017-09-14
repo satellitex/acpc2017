@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    working_directory: /opt/rime_ci
+    docker:
+      - image: satellitex/rime-ci:latest
+    steps:
+      - checkout
+      - run:
+          name: all-build
+          command: |
+            ./all-test.sh
