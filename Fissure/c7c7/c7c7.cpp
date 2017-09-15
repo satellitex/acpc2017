@@ -1,138 +1,233 @@
 #include<bits/stdc++.h>
-#define r(i,n) for(int i=0;i<n;i++)
-#define R(i,a,n) for(int i=a;i<n;i+=2)
 using namespace std;
-typedef pair<int,int>P;
+
+typedef pair<int,int> P;
+
 #define fi first
 #define se second
-#define mk make_pair
-int num=1,col[2055][2055],n,num2=1;
-int koko[2055][2055],topo[2055];
-int dx[]={1,0,-1,0};
-int dy[]={0,1,0,-1};
-P zahyo[2055];
-string s[2055];
-vector<int>v[300000],rv[300000],lv[300000];
-set<pair<pair<int,int>,pair<int,int> > >st;
-bool used[300000],vi[300000];
-void ravel_number(){
-	R(i,1,n-1)R(j,1,n-1){
-	  if(s[i][j]=='x'&&!col[i][j]){
-		int cnt=0;
-		r(k,4){
-			int x=j+dx[k];
-			int y=i+dy[k];
-			if(s[y][x]=='x'&&!col[y][x])cnt++;
-		}
-		if(cnt==4){
-			r(k,4){
-				int y=i,x=j;
-				while(1){
-					y+=dy[k];
-					x+=dx[k];
-					if(y<0||y>=n||x<0||x>=n||s[y][x]=='o'||col[y][x])break;
-					int cnt2=0;
-					r(l,2){
-						int yy=y+dy[(k+l*2+1)%4];
-					    int xx=x+dx[(k+l*2+1)%4];
-					    if(yy<0||yy>=n||xx<0||xx>=n)continue;
-					    if(s[yy][xx]=='x'&&!col[yy][xx])cnt2++;
-					}
-					if(cnt2>=2)break;
-					else col[y][x]=num;
-				}
-			}
-			zahyo[num-1]=P(i,j);
-			col[i][j]=num++;
-			koko[i][j]=1;
-		}
-	  }
-	}
+
+#define MAX 2055
+
+char s[MAX][MAX];
+
+int n;
+
+int dx1[]={0,0,1,-1};
+int dy1[]={1,-1,0,0};
+int dx2[]={1,-1,1,-1};
+int dy2[]={1,1,-1,-1};
+
+P dp[4][MAX][MAX];
+
+int color[MAX][MAX];
+int table[MAX][MAX];
+int cnt[MAX][MAX];
+
+bool used[4][MAX][MAX];
+
+map<P,vector<P> >Tree;
+
+vector<P>ans;
+
+void BAD_END(){
+	cout<<-1<<endl;
+	exit(0);
 }
-void make_graph(){
-	R(i,1,n-1)R(j,1,n-1){
-	  if(col[i][j]){
-		int cnt=0;
-		r(k,4){
-			int x=j+dx[k];
-			int y=i+dy[k];
-			if(s[y][x]=='x'&&col[y][x]==col[i][j])cnt++;
-		}
-		if(cnt==4){
-			r(k,4){
-				int y=i,x=j;
-				while(1){
-					y+=dy[k];
-					x+=dx[k];
-					if(y<0||y>=n||x<0||x>=n||s[y][x]=='o')break;
-					if(s[y][x]=='x'&&col[i][j]!=col[y][x]&&!st.count( mk( mk(y,x) ,mk(i,j) ) )){
-						v[col[y][x]-1].push_back(col[i][j]-1);
-						rv[col[i][j]-1].push_back(col[y][x]-1);
-						st.insert(mk(mk(y,x),mk(i,j)));
-						break;
-					}
-				}
-			}
-		}
-	  }
-	}
-}
-void toporogical_sort(int p){
-	used[p]=1;
-	r(i,v[p].size())
-	  if(!used[v[p][i]])
-	  	toporogical_sort(v[p][i]);
-	topo[p]=num2++;
-}
-void list_van(){
-	r(i,num-1){
-		int p=1e9,index=-1;
-	    r(j,(int)rv[i].size()){
-	    	if(topo[rv[i][j]]<p){
-	    		p=topo[rv[i][j]];
-	    		index=j;
-	    	}
-	    }
-	    if(index==-1)continue;
-	    lv[rv[i][index]].push_back(i);
-	}
-}
-void print(int p){
-	printf("%d\n%d\n",zahyo[p].fi+1,zahyo[p].se+1);
-	vector<pair<P,int> >vp;
-	r(i,lv[p].size()){
-		vp.push_back(mk(mk(zahyo[lv[p][i]].fi,zahyo[lv[p][i]].se),lv[p][i]));
-	}
-	sort(vp.begin(),vp.end());
-	r(i,vp.size()){
-		print(vp[i].se);
-	}
-}
-main(){
+
+void Input(){
 	cin>>n;
-	r(i,n)cin>>s[i];
+	gets(s[0]);
+	for(int i=0;i<n;i++){
+		gets(s[i]);
+	}
+}
 
-	r(i,n)r(j,n)if(s[i][j]=='x'&&(i%2==0)&&(j%2==0)){
-		cout<<-1<<endl;
-		return 0;
+bool in(int a,int b){
+	return !(a<0||a>=n||b<0||b>=n);
+}
+
+bool in2(int a,int b,pair<P,P> c){
+	return !(c.fi.se>a||c.se.se<a||c.fi.fi>b||c.se.fi<b);
+}
+
+void area_paint(int x,int y,int k){
+	color[y][x]=k;
+	for(int i=0;i<4;i++){
+		int x1=x+dx1[i];
+		int y1=y+dy1[i];
+		if(in(x1,y1)&&s[y1][x1]=='o'&&!color[y1][x1]){
+			area_paint(x1,y1,k);
+		}
+	}
+}
+
+void pre_fill(){
+	int k=1;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(s[i][j]=='o'&&!color[i][j]){
+				area_paint(j,i,k++);
+			}
+		}
+	}
+}
+
+P get_center(P p,int k,pair<P,P> v){
+	P cent=P(-1,-1);
+	int y=p.se,Y=p.se,p1;
+	int x=p.fi,X=p.fi,p2;
+
+	while(1){
+
+	    while(used[k][y][x]){
+	    	return P(-1,-1);
+	    }
+
+	    while(1){
+		    if(in(y,x)&&s[y][x]=='o'){
+			    y+=dy2[k];
+		    }
+		    else break;
+	    }
+	    y-=dy2[k];
+
+	    while(1){
+		    if(in(y,x)&&s[y][x]=='o'){
+			    x+=dx2[k];
+		    }
+		    else break;
+	    }
+	    y+=dy2[k];
+
+	    if(!in2(y,x,v)){
+	    	dp[k][Y][X]=P(-1,-1);
+	    	used[k][Y][X]=1;
+	    	break;
+	    }
+
+	    used[k][Y][X]=1;
+	    cnt[y][x]++;
+	    dp[k][Y][X]=P(y,x);
+	    Y=y+dy2[k],X=x+dx2[k];
+
+	    if(cnt[y][x]==4){
+	  	    cent=P(x,y);
+	    }
+
+	    y+=dy2[k];
+	    x+=dx2[k];
+
+	    if(!in2(y,x,v)){
+	    	break;
+	    }
 	}
 
-	ravel_number();
+	return cent;
+}
+P make_tree(int x1,int y1,int x2,int y2){
 
-	r(i,n)r(j,n)if(s[i][j]=='x'&&!col[i][j]){
-		cout<<-1<<endl;
-		return 0;
+	if(color[y1][x1]==color[y2][x2])return P(-1,-1);
+
+	P center;
+	P tmp[4];
+	pair<P,P>p;
+
+	p=make_pair(P(x1,y1),P(x2,y2));
+
+	tmp[0]=P(x1,y1);
+	tmp[1]=P(x2,y1);
+	tmp[2]=P(x1,y2);
+	tmp[3]=P(x2,y2);
+
+	for(int i=0;i<4;i++){
+		center=get_center(tmp[i],i,p);
+		if(center.fi!=-1){
+			break;
+		}
+		tmp[i]=P(-1,-1);
 	}
 
-	make_graph();
+	if(center.se<=y1||y2<=center.se)return P(-1,-1);
+	if(center.fi<=x1||x2<=center.fi)return P(-1,-1);
 
-	r(i,num)if(!used[i])toporogical_sort(i);
+	if(center.fi!=-1)tmp[0]=make_tree(x1,y1,center.fi-1,center.se-1);
+	if(center.fi!=-1)tmp[1]=make_tree(center.fi+1,y1,x2,center.se-1);
+	if(center.fi!=-1)tmp[2]=make_tree(x1,center.se+1,center.fi-1,y2);
+	if(center.fi!=-1)tmp[3]=make_tree(center.fi+1,center.se+1,x2,y2);
 
-	list_van();
+	for(int i=0;i<4;i++){
+		Tree[center].push_back(tmp[i]);
+	}
 
-	cout<<num-1<<endl;
+	return center;
+}
 
-	memset(used,0,sizeof(used));
+void priority_sort(P center){
 
-	r(i,num-1)if(topo[i]==num-1)print(i);
+	priority_queue<P,vector<P>,greater<P> >q;
+	q.push(P(center.se,center.fi));
+
+	while(!q.empty()){
+
+		center=q.top();q.pop();
+		if(center.fi==-1)continue;
+
+		ans.push_back(center);
+
+		for(int i=0;i<Tree[P(center.se,center.fi)].size();i++){
+			q.push(P(Tree[P(center.se,center.fi)][i].se,Tree[P(center.se,center.fi)][i].fi));
+		}
+	}
+}
+
+void cross_fill(P p){
+	for(int i=0;i<4;i++){
+		int y=p.fi;
+		int x=p.se;
+		while(1){
+			y+=dy1[i];
+			x+=dx1[i];
+			if(in(y,x)&&s[y][x]=='x'){
+				table[y][x]=1;
+			}
+			else break;
+		}
+	}
+	table[p.fi][p.se]=1;
+}
+
+void fill_table(){
+	for(int i=0;i<ans.size();i++){
+		cross_fill(ans[i]);
+	}
+}
+
+void error_check(){
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(s[i][j]=='x'&&!table[i][j]){
+				BAD_END();
+			}
+		}
+	}
+}
+
+void Output(){
+
+	cout<<ans.size()<<endl;
+
+	for(int i=0;i<ans.size();i++){
+		cout<<ans[i].fi+1<<endl<<ans[i].se+1<<endl;
+	}
+}
+
+main(){
+	P center;
+	Input();
+	pre_fill();
+	center=make_tree(0,0,n-1,n-1);
+	priority_sort(center);
+	fill_table();
+	error_check();
+	Output();
 }
