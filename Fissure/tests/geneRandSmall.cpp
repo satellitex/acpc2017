@@ -41,7 +41,7 @@ void solve(int ID){
 
 
 
-  std::uniform_int_distribution<> randB(1,3);
+  std::uniform_int_distribution<> randB(1,20);//3);
   N=1+randB(mt)*2;
   std::uniform_int_distribution<> randA(1,N);
 

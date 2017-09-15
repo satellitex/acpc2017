@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define MAX_N 50
+#define MAX_N 100
 
 int N;
 char A[MAX_N][MAX_N];
@@ -26,6 +26,15 @@ bool isFillA(int y, int x, int sy, int sx, int ty, int tx) {
   return true;
 }
 
+bool isNewsBlack(int y, int x, int sy, int sx, int ty, int tx) {
+  if(A[y][x] == 'o') return false;
+  for(int k = 0; k < 4; k++) {
+    int ny = y+dy[k], nx = x+dx[k];
+    if(isIn(ny, nx, sy, sx, ty, tx) && A[ny][nx] == 'o') return false;
+  }
+  return true;
+}
+
 bool isExistBlack(int sy, int sx, int ty, int tx) {
   for(int i = sy; i < ty; i++)
     for(int j = sx; j < tx; j++)
@@ -43,6 +52,7 @@ Pi solve(int sy, int sx, int ty, int tx) {
   Ti idx = Ti(sy, sx, ty, tx);
   if(mp.count(idx)) return mp[idx];
   if(!isExistBlack(sy, sx, ty, tx)) return mp[idx] = Pi(-1, -1);
+  /*
   for(int i = sy+1; i < ty; i+=2) {
     for(int j = sx+1; j < tx; j+=2) {
       if(!isFillA(i, j, sy, sx, ty, tx)) continue;
@@ -62,6 +72,39 @@ Pi solve(int sy, int sx, int ty, int tx) {
       if(d.first != -1) graph[p].push_back(d);
       return mp[idx] = p;
     }
+  }
+  */
+  vector<int> row, col;
+  for(int i = sy+1; i < ty; i+=2) {
+    if(A[i][sx] == 'x') row.push_back(i);
+  }
+  for(int i = sx+1; i < tx; i+=2) {
+    if(A[sy][i] == 'x') col.push_back(i);
+  }
+  int rsz = row.size(), csz = col.size();
+  for(int ri = 0, ci = 0; ri < rsz && ci < csz; ri++, ci++) {
+    int ny = row[ri], nx = col[ci];
+    if(!isNewsBlack(ny, nx, sy, sx, ty, tx)) {
+      if(rsz < csz) ri--;
+      else if(rsz > csz) ci--;
+      continue;
+    }
+  if(!isFillA(ny, nx, sy, sx, ty, tx)) continue;
+    Pi p = Pi(ny, nx);
+    Pi a = solve(sy, sx, ny, nx);
+    if(a.first == -2) continue;
+    Pi b = solve(sy, nx+1, ny, tx);
+    if(b.first == -2) continue;
+    Pi c = solve(ny+1, sx, ty, nx);
+    if(c.first == -2) continue;
+    Pi d = solve(ny+1, nx+1, ty, tx);
+    if(d.first == -2) continue;
+    graph[p].clear();
+    if(a.first != -1) graph[p].push_back(a);
+    if(b.first != -1) graph[p].push_back(b);
+    if(c.first != -1) graph[p].push_back(c);
+    if(d.first != -1) graph[p].push_back(d);
+    return mp[idx] = p;
   }
   return mp[idx] = Pi(-2, -2);
 }
@@ -90,7 +133,7 @@ bool isSameAB() {
 
 bool input() {
   cin >> N;
-  assert(N <= 50);
+  assert(N <= MAX_N);
   for(int i = 0; i < N; i++)
     for(int j = 0; j < N; j++)
       cin >> A[i][j];
