@@ -99,27 +99,19 @@ P get_center(P p,int k,pair<P,P> v){
 	    }
 	    y+=dy2[k];
 
-	    if(!in2(y,x,v)){
-	    	dp[k][Y][X]=P(-1,-1);
-	    	used[k][Y][X]=1;
-	    	break;
-	    }
+	    if(!in2(y,x,v)) break;
 
 	    used[k][Y][X]=1;
 	    cnt[y][x]++;
 	    dp[k][Y][X]=P(y,x);
 	    Y=y+dy2[k],X=x+dx2[k];
 
-	    if(cnt[y][x]==4){
-	  	    cent=P(x,y);
-	    }
+	    if(cnt[y][x]==4) cent=P(x,y);
 
 	    y+=dy2[k];
 	    x+=dx2[k];
 
-	    if(!in2(y,x,v)){
-	    	break;
-	    }
+	    if(!in2(y,x,v)) break;
 	}
 
 	return cent;
@@ -146,9 +138,6 @@ P make_tree(int x1,int y1,int x2,int y2){
 		}
 		tmp[i]=P(-1,-1);
 	}
-
-	if(center.se<=y1||y2<=center.se)return P(-1,-1);
-	if(center.fi<=x1||x2<=center.fi)return P(-1,-1);
 
 	if(center.fi!=-1)tmp[0]=make_tree(x1,y1,center.fi-1,center.se-1);
 	if(center.fi!=-1)tmp[1]=make_tree(center.fi+1,y1,x2,center.se-1);
