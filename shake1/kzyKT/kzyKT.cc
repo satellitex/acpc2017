@@ -2,12 +2,9 @@
 using namespace std;
 
 int main() {
-  long long n;
+  long long n,k=0;
   cin >> n;
-  for(int i=0;;i++) {
-    if(n&(1LL<<i)) continue;
-    cout << (1LL<<i) << endl;
-    return 0;
-  }
+  while(n&(1LL<<k)) k++;
+  cout << (1LL<<k) << endl;
   return 0;
 }
