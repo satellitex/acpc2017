@@ -4,9 +4,9 @@ using namespace std;
 #define S second
 typedef pair<int,int> P;
 typedef pair<int,P> PP;
-
-int dp1[10][1001],c[10][10],dp2[1<<10][10],dp3[2][1<<5][1001],dp[1<<10][1001],ans;
-vector<PP> a[11];
+const int N=14;
+int dp1[N][1001],c[N][N],dp2[1<<N][N],dp3[2][1<<(N/2+1)][1001],dp[1<<N][1001],ans;
+vector<PP> a[N+1];
 int main() {
   int A,B,n;
   cin >> n >> A >> B;
