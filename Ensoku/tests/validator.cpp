@@ -6,8 +6,8 @@ using namespace std;
 
 const int MAX_A = 10000;
 const int MAX_B = 1000;
-const int MAX_N = 15;
-const int MAX_K = 500;
+const int MAX_N = 14;
+const int MAX_K = 300;
 const int MAX_a = 1000;
 const int MAX_b = 1000;
 const int MAX_c = 1000;
@@ -29,7 +29,7 @@ void input() {
   inf.readSpace();
   int B = inf.readInt(MIN_B, MAX_B, "B");
   inf.readEoln();
-  ensuref(B<=A,"A must be lather than B or equal to B");
+  ensuref(B<=A,"A must be lather than or equal to B");
   
   for(int i = 0; i < N; i++) {
     int K = inf.readInt(MIN_K, MAX_K, "K");

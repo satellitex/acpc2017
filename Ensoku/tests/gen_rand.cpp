@@ -5,8 +5,8 @@ using namespace std;
 
 const int MAX_A = 10000;
 const int MAX_B = 1000;
-const int MAX_N = 10;
-const int MAX_K = 100;
+const int MAX_N = 14;
+const int MAX_K = 300;
 const int MAX_a = 1000;
 const int MAX_b = 1000;
 const int MAX_c = 1000;
@@ -14,7 +14,7 @@ const int MAX_d = 10000;
 
 const int MIN_A = 1;
 const int MIN_B = 1;
-const int MIN_N = 10;
+const int MIN_N = 1;
 const int MIN_K = 1;
 const int MIN_a = 1;
 const int MIN_b = 1;
