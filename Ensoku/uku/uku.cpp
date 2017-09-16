@@ -7,7 +7,7 @@ using namespace std;
 
 #define MAX_A 10000
 #define MAX_B 1000
-#define MAX_N 10
+#define MAX_N 14
 #define MAX_K 100
 
 int N, A, B;
