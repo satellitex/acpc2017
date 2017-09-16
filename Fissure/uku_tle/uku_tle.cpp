@@ -52,28 +52,6 @@ Pi solve(int sy, int sx, int ty, int tx) {
   Ti idx = Ti(sy, sx, ty, tx);
   if(mp.count(idx)) return mp[idx];
   if(!isExistBlack(sy, sx, ty, tx)) return mp[idx] = Pi(-1, -1);
-  /*
-  for(int i = sy+1; i < ty; i+=2) {
-    for(int j = sx+1; j < tx; j+=2) {
-      if(!isFillA(i, j, sy, sx, ty, tx)) continue;
-      Pi p = Pi(i, j);
-      Pi a = solve(sy, sx, i, j);
-      if(a.first == -2) continue;
-      Pi b = solve(sy, j+1, i, tx);
-      if(b.first == -2) continue;
-      Pi c = solve(i+1, sx, ty, j);
-      if(c.first == -2) continue;
-      Pi d = solve(i+1, j+1, ty, tx);
-      if(d.first == -2) continue;
-      graph[p].clear();
-      if(a.first != -1) graph[p].push_back(a);
-      if(b.first != -1) graph[p].push_back(b);
-      if(c.first != -1) graph[p].push_back(c);
-      if(d.first != -1) graph[p].push_back(d);
-      return mp[idx] = p;
-    }
-  }
-  */
   vector<int> row, col;
   for(int i = sy+1; i < ty; i+=2) {
     if(A[i][sx] == 'x') row.push_back(i);
