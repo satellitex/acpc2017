@@ -16,8 +16,8 @@ int main(){
     for(int j=0;j<n;j++){
       if(m[i][j]=='o'){
 	cnt++;
-	for(int y=i;m[y][j]!='x';y++)
-	  for(int x=j;m[y][x]!='x';x++)
+	for(int y=i;y<n&&m[y][j]=='o';y++)
+	  for(int x=j;x<n&&m[y][x]=='o';x++)
 	    m[y][x]='x';
       }
     }  
