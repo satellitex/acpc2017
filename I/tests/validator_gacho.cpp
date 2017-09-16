@@ -8,11 +8,11 @@ typedef pair<int,int> P;
 
 const int MIN_N = 2;
 const int MAX_N = 100000;
-const int MAX_M = 100000;
+const long long MAX_M = 100000;
 const int MIN_w = 1;
 const int MAX_w = 1000000;
 
-int N, M, w[MAX_N], u[MAX_M], v[MAX_M];
+long long N, M, w[MAX_N], u[MAX_M], v[MAX_M];
 
 
 void input(){
