@@ -14,7 +14,7 @@ const int MAX_d = 10000;
 
 const int MIN_A = 1;
 const int MIN_B = 1;
-const int MIN_N = 1;
+const int MIN_N = 10;
 const int MIN_K = 1;
 const int MIN_a = 1;
 const int MIN_b = 1;

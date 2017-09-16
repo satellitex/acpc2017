@@ -6,7 +6,7 @@ using namespace std;
 
 const int MAX_A = 10000;
 const int MAX_B = 1000;
-const int MAX_N = 12;
+const int MAX_N = 15;
 const int MAX_K = 500;
 const int MAX_a = 1000;
 const int MAX_b = 1000;

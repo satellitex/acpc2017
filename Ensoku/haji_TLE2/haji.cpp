@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define int long long
-#define N 12
+#define N 15
 #define MAX_B 1010
 using namespace std;
 const int INF = 1LL<<55;
@@ -58,7 +58,8 @@ void DP3(int dp[1<<(N)][MAX_B]){ //TLE
       if(used[nbit])continue;
       used[nbit] = 1;
       for(int i=0;i<=B;i++)
-        for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp[1<<nx][j]);
+        for(int j=0;j+i<=B;j++) Max(dp[nbit][i+j], dp[bit][i] + dp[1<<nx][j]),assert(dp[nbit][i+j]<1e9);
+
     }
   }
 }
