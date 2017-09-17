@@ -1,0 +1,105 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem D: Piano</h1>
+<h2>Problem</h2>
+<p>
+がっちょくんはピアノを弾こうとしている。今がっちょくんはある楽譜を持っており、その楽譜に従って弾く。
+</p>
+<p>
+楽譜には、ある時刻にどの鍵盤を弾くべきかを示す音符が時系列順に記載されている。今回使う楽譜には和音(複数の鍵盤を押したときに出る音)は現れず、また音の長さも考えないことにする。
+</p>
+<p>
+がっちょくんはピアノを弾くとき、以下のルールに従う。
+<ul>
+  <li>片手のみで弾く</li>
+  <li>指一本で鍵盤ひとつを弾く</li>
+  <li>最初の音はどの指でも弾ける</li>
+  <li>前の音より高い音を弾くとき、前の音を弾いた指よりもひとつ以上右にある指を使う</li>
+  <li>前の音より低い音を弾くとき、前の音を弾いた指よりもひとつ以上左にある指を使う</li>
+  <li>前の音と同じ高さの音を弾くとき、前の音を弾いた指と同じ指を使う</li>
+</ul>
+</p>
+<p>
+がっちょくんが使う楽譜が与えられるので、ルールに従ってその楽譜を演奏しきるには、演奏する方の腕に最小何本の指が必要かを求めよ。ただし、必要な指は6本以上になることがあることに注意せよ。
+</p>
+
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+<var>N</var>
+<var>a<sub>1</sub></var>
+<var>a<sub>2</sub></var>
+<var>a<sub>3</sub></var>
+...
+<var>a<sub>i</sub></var>
+...
+<var>a<sub>N</sub></var>
+</pre>
+<p>
+1行目に、楽譜に書かれている音符の総数を表す<var>N</var>が与えられる。 続く2行目からN+1行目までに、時刻i(1 &le; i &le; N)に弾くべき鍵盤が最も左の鍵盤から何番目かを表す<var>a<sub>i</sub></var>が与えられる。
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+    <li>1 &le; <var>N</var> &le; 10<sup>5</sup></li>
+    <li>0 &le; <var>a<sub>i</sub></var> &le; 10<sup>9</sup></li>
+</ul>
+
+<h2>Output</h2>
+<p>
+がっちょくんが与えられた楽譜を上記ルールに従って弾くために必要な最小の指の本数を1行に出力せよ。
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+3
+2
+5
+1
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+2
+</pre>
+<p>
+<p>
+この場合、図1の&#9312;、&#9313;	、&#9314;	の順で鍵盤を弾く。指が2本あると、左側の指で鍵盤2を、右側の指で鍵盤5を、また左側の指で鍵盤1を弾くことができる。
+<figure>
+<img src="./img/keyboard.png" alt="Sample1の図解" capton>
+<legend>図1: Sample1 の図解</legend>
+</figure>
+</p>
+
+<h2>Sample Input 2</h2>
+<pre>
+5
+4
+5
+2
+1
+3
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+3
+</pre>
+
+<h2>Sample Input 3</h2>
+<pre>
+3
+4
+4
+4
+</pre>
+
+<h2>Sample Output 3</h2>
+<pre>
+1
+</pre>
