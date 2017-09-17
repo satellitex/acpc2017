@@ -3,27 +3,28 @@
 <script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
 </script>
 
-<h1>Problem B: the NEET</h1>
+<h1>Problem B: Hating crowd</h1>
 <h2>Problem</h2>
 
 <p>
-  ニートくんは1年12か月毎月30日まで計360日の世界線で暮らしています。<br>
-  その世界では毎年同じ期間の<var>N</var>個の休暇が世界中の人に適用されていました。休暇は<var>M<sub>i</sub></var>月<var>D<sub>i</sub></var>日から始まる連続した<var>V<sub>i</sub></var>日間です。<br>
-  しかしニートくんはニートなので休暇に関係なく毎日休みです。<br>
-  ある日ニートくんは珍しく出かけようと思いましたが人混みが嫌いなので休暇が原因で混雑する日はなるべく外に出たくありません。<br>
+ニートくんは1年12ヶ月毎月30日まで計360日の世界線で暮らしています。<br>
+その世界では毎年同じ日程の<var>S<sub>i</sub></var>個の連休<var><sub>i</sub></var>が世界中の人に適用されていました。連休<var><sub>i</sub></var>は<var>M<sub>i</sub></var>月<var>S<sub>i</sub></var>日から始まる連続した<var>S<sub>i</sub></var>日間です。<br>
+ニートくんはニートなので連休に関係なく毎日休みです。<br>
+ある日ニートくんは珍しく出かけようと思いましたが人混みが嫌いなので連休が原因で混雑する日はなるべく外に出たくありません。<br>
 </p>
 <p>
-  そこでニートくんは休暇情報を元に以下の方法で混雑度<var>s</var>を計算し混雑度<var>s</var>が一番少ない日を探そうとしています。
+そこでニートくんは情報を元に以下の方法で各日の混雑度を計算し混雑度が一番小さい日を探そうとしています。<br>
   <ul>
-    <li>休暇一つにつき一つ混雑度<var>S<sub>i</sub></var>が与えられる。休暇中の混雑度<var>s</var>は毎日<var>S<sub>i</sub></var>である。</li>
-    <li>休暇の影響により休暇初日/最終日から<var>a</var>日前/<var>a</var>日後の混雑度<var>s</var>は<var>max(S<sub>i</sub>-a,0)</var>となる。</li>
-    <li>ある日の混雑度<var>s</var>が一つに定まらない場合は一番大きい混雑度<var>s</var>をその日の混雑度<var>s</var>にする。</li>
+    <li>ある日付<var>x</var>が、連休<var><sub>i</sub></var>によって受ける影響度を表す数値は、日付<var>x</var>が連休<var><sub>i</sub></var>の中に含まれていれば<var>S<sub>i</sub></var>である。</li>
+    <li>そうでなければ、 <var>max</var>( 0,  <var>S<sub>i</sub></var> - <var>min</var> (   <var>x</var>から連休<var><sub>i</sub></var>の初日までの日数 , 連休<var><sub>i</sub></var>の最終日から<var>x</var>までの日数    ) )となる。</li>
+    <li>ある日付<var>x</var>の混雑度は、<var>S<sub>i</sub></var>個の連休から受ける影響度の中で、もっとも大きい影響度と同じ数値になる。</li>
   </ul>
-  ニートくんが出かけようと思える1年の中で一番小さい混雑度<var>s</var>を出力してください。
+ニートくんが出かけようと思える1年の中で一番小さい混雑度を出力してください。
 </p>
 
 <p>
-  休暇は年を跨ぐ事があります。
+連休<var><sub>i</sub></var>は年を跨ぐ事があります。<br>
+連休日程は重複する事があります。<br>
 </p>
 
 <h2>Input</h2>
@@ -36,7 +37,7 @@
   <var>M<sub>N</sub></var> <var>D<sub>N</sub></var> <var>S<sub>N</sub></var> <var>V<sub>N</sub></var>
 </pre>
 <p>
-  1行目に整数<var>N</var>が与えられる。2行目から<var>N</var>+1行目に整数<var>M<sub>i</sub></var>, <var>D<sub>i</sub></var>, <var>S<sub>i</sub></var>, <var>V<sub>i</sub></var>が空白区切りで与えられる。
+1行目に整数<var>N</var>が与えられる。2行目から<var>N</var>+1行目に整数<var>M<sub>i</sub></var>, <var>D<sub>i</sub></var>, <var>S<sub>i</sub></var>, <var>V<sub>i</sub></var>が空白区切りで与えられる。
 </p>
 
 <h2>Constraints</h2>
@@ -50,46 +51,46 @@
 
 <h2>Output</h2>
 <p>
-  一番小さい混雑度<var>s</var>を出力してください。
+ 一番小さい混雑度<var>s</var>を出力してください。
 </p>
 
 <h2>Sample Input 1</h2>
 <pre>
-  1
-  1 1 359 1
+1
+1 1 359 1
 </pre>
 
 <h2>Sample Output 1</h2>
 <pre>
-  0
+0
 </pre>
 
 <h2>Sample Input 2</h2>
 <pre>
-  2
-  2 4 25 306
-  1 9 7 321
+2
+2 4 25 306
+1 9 7 321
 </pre>
 
 <h2>Sample Output 2</h2>
 <pre>
-  158
+158
 </pre>
 
 <h2>Sample Input 3</h2>
 <pre>
-  8
-  2 9 297 297
-  8 6 359 211
-  8 16 28 288
-  7 9 113 143
-  3 18 315 190
-  10 18 277 300
-  9 5 276 88
-  3 5 322 40
+8
+2 9 297 297
+8 6 359 211
+8 16 28 288
+7 9 113 143
+3 18 315 190
+10 18 277 300
+9 5 276 88
+3 5 322 40
 </pre>
 
 <h2>Sample Output 3</h2>
 <pre>
-  297
+297
 </pre>
