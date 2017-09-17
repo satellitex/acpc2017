@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define CASE_NUM 20
+#define CASE_NUM 10
 
 const int MAX_N = 1e5;
 const int MAX_A = 1e9;
