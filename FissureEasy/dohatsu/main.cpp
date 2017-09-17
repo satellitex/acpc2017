@@ -99,8 +99,18 @@ P solve(int ay,int ax,int by,int bx){
 
 int main(){
   scanf("%d",&N);
-  for(int i=0;i<N;i++)scanf("%s",t[i]);
+  bool flag=false;
+  for(int i=0;i<N;i++){
+    scanf("%s",t[i]);
+    for(int j=0;j<N;j++)
+      if(t[i][j]=='x')flag=true;
+  }
 
+  if(!flag){
+    cout<<0<<endl;
+    return 0;
+  }
+  
   P sp=solve(-1,-1,N,N);
 
   map<P,bool> flg;
@@ -137,6 +147,7 @@ int main(){
   for(int i=0;i<N;i++){
     for(int j=0;j<N;j++){
       if( (t[i][j]=='x') != T[i][j] ){
+        assert(0);
         printf("-1\n");
         return 0;
       }
