@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define MAX_N 100
+#define MAX_N 128
 
 int N;
 char A[MAX_N][MAX_N];
