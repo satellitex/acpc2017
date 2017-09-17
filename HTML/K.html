@@ -10,10 +10,11 @@
 <p>
 チノルチョコでは<var>m</var>種類のチョコレートを販売しており、それぞれ別の工場で製造している。<br>
 すべての店で全種類のチョコレートを販売する。<br>
-チノルチョコではチョコレートを搬送するためのトラックを1台しか所有していなく、1台のトラックでは1店分のチョコレートしか運べないので、店から別の店へ移動する際に工場をすべてを回ってチョコレートを回収してから移動する。
+チノルチョコではチョコレートを搬送するためのトラックを1台しか所有しておらず、1台のトラックでは1店分のチョコレートしか運べない。<br>
+そのためトラックは店から別の店へ移動する際に工場をすべてを回ってチョコレートを回収してから移動する。
 </p>
 <p>
-ある店から別の店へ移動する時の最短移動距離の最大が最小になるように店を配置した時の最大の移動距離を求めよ。
+ある店から別の店へ移動する時の最短移動距離の最大が最小になるように店を配置した時の、最大の移動距離を求めよ。
 </p>
 <h2>Input</h2>
 
@@ -21,17 +22,17 @@
 <var>n</var> <var>m</var>
 <var>a</var><sub>0</sub> <var>b</var><sub>0</sub> <var>c</var><sub>0</sub> <var>d</var><sub>0</sub>
 ...
-<var>a</var><sub><var>n</var> &minus; 1</sub> <var>b</var><sub><var>n</var> &minus; 1</sub> <var>c</var><sub><var>n</var> &minus; 1</sub> <var>d</var><sub><var>n</var> &minus; 1</sub>
+<var>a</var><sub><var>n</var>&minus;1</sub> <var>b</var><sub><var>n</var>&minus;1</sub> <var>c</var><sub><var>n</var>&minus;1</sub> <var>d</var><sub><var>n</var>&minus;1</sub>
 <var>x</var><sub>0</sub> <var>y</var><sub>0</sub>
 ...
-<var>x</var><sub><var>m</var> &minus; 1</sub> <var>y</var><sub><var>m</var> &minus; 1</sub>
+<var>x</var><sub><var>m</var>&minus;1</sub> <var>y</var><sub><var>m</var>&minus;1</sub>
 </pre>
 
 <p>
 入力はすべて整数で与えられる。<br>
 1行目にチノルチョコの店の数<var>n</var>、チョコレートを製造している工場の数<var>m</var>が空白区切りで与えられる。<br>
 2行目から<var>n</var>行にそれぞれの店を建てる場所の候補の座標(<var>a<sub>i</sub></var>,<var>b<sub>i</sub></var>),(<var>c<sub>i</sub></var>,<var>d<sub>i</sub></var>)が空白区切りで与えられる。<br>
-2 &plus; <var>n</var>行目から<var>m</var>行に工場の座標(<var>x<sub>i</sub></var>,<var>y<sub>i</sub></var>)が空白区切りで与えられる。
+2&plus;<var>n</var>行目から<var>m</var>行に工場の座標(<var>x<sub>i</sub></var>,<var>y<sub>i</sub></var>)が空白区切りで与えられる。
 </p>
 
 <h2>Constraints</h2>
@@ -46,8 +47,8 @@
 
 <h2>Output</h2>
 <p>
-移動距離の最大が最小になるように店を配置した時の最大の移動距離を出力せよ。<br>
-誤差が10<sup>&minus; 6</sup>を超えてはならない。
+最短移動距離の最大が最小になるように店を配置した時の、最大の移動距離を出力せよ。<br>
+誤差が10<sup>&minus;6</sup>を超えてはならない。
 </p>
 
 <h2>Sample Input 1</h2>
