@@ -22,7 +22,6 @@ int table[MAX][MAX];
 int cnt[MAX][MAX];
 
 bool used[2][MAX][MAX];
-bool visited[MAX][MAX];
 
 map<P,vector<P> >Tree;
 
@@ -50,13 +49,21 @@ bool in2(int a,int b,pair<P,P> c){
 }
 
 void area_paint(int x,int y,int k){
+	queue<P>q;
+	q.push(P(x,y));
 	color[y][x]=k;
-	for(int i=0;i<4;i++){
-		int x1=x+dx1[i];
-		int y1=y+dy1[i];
-		if(in(x1,y1)&&s[y1][x1]=='o'&&!color[y1][x1]){
-			area_paint(x1,y1,k);
-		}
+	while(!q.empty()){
+		P p=q.front();q.pop();
+		y=p.se;
+		x=p.fi;
+	    for(int i=0;i<4;i++){
+		    int x1=x+dx1[i];
+		    int y1=y+dy1[i];
+		    if(in(x1,y1)&&s[y1][x1]=='o'&&!color[y1][x1]){
+			    q.push(P(x1,y1));
+			    color[y1][x1]=k;
+		    }
+	    }
 	}
 }
 
@@ -174,19 +181,17 @@ void cross_fill(P p){
 		while(1){
 			y+=dy1[i];
 			x+=dx1[i];
-			if(in(y,x)&&s[y][x]=='x'){
-				visited[y][x]=1;
+			if(in(y,x)&&s[y][x]=='x'&&!table[y][x]){
 				table[y][x]=1;
 			}
-			else if(visited[y][x]) break;
-			else if(s[y][x]=='o'){
+			else if(table[y][x]&&in(y,x)) break;
+			else if(s[y][x]=='o'&&in(y,x)){
 				BAD_END();
 			}
 			else break;
 		}
 	}
 	table[p.fi][p.se]=1;
-	visited[p.fi][p.se]=1;
 }
 
 void fill_table(){
@@ -210,7 +215,7 @@ void Output(){
 	cout<<ans.size()<<endl;
 
 	for(int i=0;i<ans.size();i++){
-		cout<<ans[i].fi+1<<endl<<ans[i].se+1<<endl;
+		printf("%d\n%d\n",ans[i].fi+1,ans[i].se+1);
 	}
 }
 
