@@ -8,22 +8,22 @@
 
 <p>
 ニートくんは1年12ヶ月毎月30日まで計360日の世界線で暮らしています。<br>
-その世界では毎年同じ日程の<var>S<sub>i</sub></var>個の連休<sub>i</sub>が世界中の人に適用されていました。連休<sub>i</sub>は<var>M<sub>i</sub></var>月<var>S<sub>i</sub></var>日から始まる連続した<var>S<sub>i</sub></var>日間です。<br>
+その世界では毎年同じ日程の<var>S<sub>i</sub></var>個の連休<var><sub>i</sub></var>が世界中の人に適用されていました。連休<var><sub>i</sub></var>は<var>M<sub>i</sub></var>月<var>S<sub>i</sub></var>日から始まる連続した<var>S<sub>i</sub></var>日間です。<br>
 ニートくんはニートなので連休に関係なく毎日休みです。<br>
 ある日ニートくんは珍しく出かけようと思いましたが人混みが嫌いなので連休が原因で混雑する日はなるべく外に出たくありません。<br>
 </p>
 <p>
 そこでニートくんは情報を元に以下の方法で各日の混雑度を計算し混雑度が一番小さい日を探そうとしています。<br>
   <ul>
-    <li>ある日付<var>x</var>が、連休<sub>i</sub>によって受ける影響度を表す数値は、日付<var>x</var>が連休<sub>i</sub>の中に含まれていれば<var>S<sub>i</sub></var>である。</li>
-    <li>そうでなければ、 <var>max</var>( 0,  <var>S<sub>i</sub></var> - <var>M<sub>i</sub></var><var>S<sub>i</sub></var> (   <var>x</var>から連休<sub>i</sub>の初日までの日数 , 連休<sub>i</sub>の最終日から<var>x</var>までの日数    ) )となる。</li>
+    <li>ある日付<var>x</var>が、連休<var><sub>i</sub></var>によって受ける影響度を表す数値は、日付<var>x</var>が連休<var><sub>i</sub></var>の中に含まれていれば<var>S<sub>i</sub></var>である。</li>
+    <li>そうでなければ、 <var>max</var>( 0,  <var>S<sub>i</sub></var> - <var>M<sub>i</sub></var><var>S<sub>i</sub></var> (   <var>x</var>から連休<var><sub>i</sub></var>の初日までの日数 , 連休<var><sub>i</sub></var>の最終日から<var>x</var>までの日数    ) )となる。</li>
     <li>ある日付<var>x</var>の混雑度は、<var>S<sub>i</sub></var>個の連休から受ける影響度の中で、もっとも大きい影響度と同じ数値になる。</li>
   </ul>
 ニートくんが出かけようと思える1年の中で一番小さい混雑度を出力してください。
 </p>
 
 <p>
-連休<sub>i</sub>は年を跨ぐ事があります。<br>
+連休<var><sub>i</sub></var>は年を跨ぐ事があります。<br>
 連休日程は重複する事があります。<br>
 </p>
 
