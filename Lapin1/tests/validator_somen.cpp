@@ -11,7 +11,7 @@ const int V_MAX = 360;
 const int S_MIN = 1;
 const int S_MAX = 360;
 int N;
-int M[M_MAX],D[D_MAX],V[V_MAX],S[S_MAX];
+int M[N_MAX],D[N_MAX],V[N_MAX],S[N_MAX];
 void input(){
   N = inf.readInt(N_MIN,N_MAX,"N");
   inf.readEoln();
