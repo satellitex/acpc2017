@@ -14,16 +14,15 @@ int n;
 
 int dx1[]={0,0,1,-1};
 int dy1[]={1,-1,0,0};
-int dx2[]={1,-1,1,-1};
-int dy2[]={1,1,-1,-1};
-
-P dp[4][MAX][MAX];
+int dx2[]={1,-1};
+int dy2[]={1,1};
 
 int color[MAX][MAX];
 int table[MAX][MAX];
 int cnt[MAX][MAX];
 
-bool used[4][MAX][MAX];
+bool used[2][MAX][MAX];
+bool visited[MAX][MAX];
 
 map<P,vector<P> >Tree;
 
@@ -103,15 +102,14 @@ P get_center(P p,int k,pair<P,P> v){
 
 	    used[k][Y][X]=1;
 	    cnt[y][x]++;
-	    dp[k][Y][X]=P(y,x);
 	    Y=y+dy2[k],X=x+dx2[k];
 
-	    if(cnt[y][x]==4) cent=P(x,y);
+	    if(cnt[y][x]==2) cent=P(x,y);
 
 	    y+=dy2[k];
 	    x+=dx2[k];
 
-	    if(!in2(y,x,v)) break;
+	    //if(!in2(y,x,v)) break;
 	}
 
 	return cent;
@@ -128,10 +126,10 @@ P make_tree(int x1,int y1,int x2,int y2){
 
 	tmp[0]=P(x1,y1);
 	tmp[1]=P(x2,y1);
-	tmp[2]=P(x1,y2);
-	tmp[3]=P(x2,y2);
+	tmp[2]=P(-1,-1);
+	tmp[3]=P(-1,-1);
 
-	for(int i=0;i<4;i++){
+	for(int i=0;i<2;i++){
 		center=get_center(tmp[i],i,p);
 		if(center.fi!=-1){
 			break;
@@ -177,12 +175,18 @@ void cross_fill(P p){
 			y+=dy1[i];
 			x+=dx1[i];
 			if(in(y,x)&&s[y][x]=='x'){
+				visited[y][x]=1;
 				table[y][x]=1;
+			}
+			else if(visited[y][x]) break;
+			else if(s[y][x]=='o'){
+				BAD_END();
 			}
 			else break;
 		}
 	}
 	table[p.fi][p.se]=1;
+	visited[p.fi][p.se]=1;
 }
 
 void fill_table(){
