@@ -1,7 +1,7 @@
 #include <iostream>
 #include "testlib.h"
 using namespace std;
-#define CASE_NUM 3
+#define CASE_NUM 1
 
 const int MAX_A = 1000;
 const int MAX_B = 1000;
