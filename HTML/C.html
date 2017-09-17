@@ -7,9 +7,12 @@
 <h2>Problem</h2>
 <p>
 太郎くんはそれぞれの長さが<var>L</var>の文字列を<var>N</var>個持っている。太郎くんは回文が大好きなので、<var>N</var>個のうちいくつかの文字列を選んで好きな順番に並べることで、できるだけ長い回文を作りたい。
+<<<<<<< HEAD
+=======
 </p>
 <p>
 全ての文字列は英小文字からなる文字列である
+>>>>>>> f8f7c5b2d5550445879ee4c9621939ee7232a86f
 </p>
 <p>
 太郎くんが作ることのできる回文の中で、最長のものを求めよ。複数ある場合は、そのうち辞書順で最小のものを出力せよ。
@@ -32,7 +35,11 @@
 <p>
 1行目に、文字列の数<var>N</var>と文字列の長さ<var>L</var>が与えられる。
 </p>
+<<<<<<< HEAD
+<p> 続く2行目から<var>N+1</var>>行目に文字列が与えられる。
+=======
 <p> 続く2行目から<var>N</var> &plus; 1行目に文字列が与えられる。
+>>>>>>> f8f7c5b2d5550445879ee4c9621939ee7232a86f
 </p>
 
 <h2>Constraints</h2>
@@ -40,26 +47,29 @@
 <ul>
     <li>1 &le; <var>N</var> &le; 1000</li>
     <li>1 &le; <var>L</var> &le; 30</li>
-    <li>a &le; <var>sに含まれる文字</var> &le; z</li>
+    <li>sは英小文字からなる文字列である。</li>
 </ul>
 
 <h2>Output</h2>
 <p>
-辞書順最小の回文を出力せよ
-回文が作れない場合は空行を出力せよ
+最長の回文の中で辞書順最小のものを出力せよ。
+</p>
+<p>
+回文が作れない場合は空行を出力せよ。
 </p>
 
 <h2>Sample Input 1</h2>
 <pre>
-3 3
-uki
-uku
-uke
+4 2
+oi
+io
+rr
+rr
 </pre>
 
 <h2>Sample Output 1</h2>
 <pre>
-uku
+iorrrroi
 </pre>
 
 <h2>Sample Input 2</h2>
@@ -79,14 +89,18 @@ acbca
 
 <h2>Sample Input 3</h2>
 <pre>
-4 2
-oi
-io
-rr
-rr
+3 3
+uki
+uku
+uke
 </pre>
 
 <h2>Sample Output 3</h2>
 <pre>
+<<<<<<< HEAD
+uku
+</pre>
+=======
 iorrrroi
 </pre>
+>>>>>>> f8f7c5b2d5550445879ee4c9621939ee7232a86f
