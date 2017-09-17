@@ -24,8 +24,7 @@ signed main(){
     for(int i=0;i<s;i++) Max(A[(idx+v+i)%mod],s-i);
   }
   
-  int mn = *min_element(A,A+mod);
-  for(int i=0;i<mod;i++) if(A[i] == mn) cout<<(i/30+1)<<" "<<i%30 + 1<<endl;
-  
+  int ans = *min_element(A,A+mod);
+  cout<<ans<<endl;  
   return 0;
 }
