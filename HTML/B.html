@@ -16,7 +16,7 @@
 そこでニートくんは情報を元に以下の方法で各日の混雑度を計算し混雑度が一番小さい日を探そうとしています。<br>
   <ul>
     <li>ある日付<var>x</var>が、連休<var><sub>i</sub></var>によって受ける影響度を表す数値は、日付<var>x</var>が連休<var><sub>i</sub></var>の中に含まれていれば<var>S<sub>i</sub></var>である。</li>
-    <li>そうでなければ、 <var>max</var>( 0,  <var>S<sub>i</sub></var> - <var>M<sub>i</sub></var><var>S<sub>i</sub></var> (   <var>x</var>から連休<var><sub>i</sub></var>の初日までの日数 , 連休<var><sub>i</sub></var>の最終日から<var>x</var>までの日数    ) )となる。</li>
+    <li>そうでなければ、 <var>max</var>( 0,  <var>S<sub>i</sub></var> - <var>min</var> (   <var>x</var>から連休<var><sub>i</sub></var>の初日までの日数 , 連休<var><sub>i</sub></var>の最終日から<var>x</var>までの日数    ) )となる。</li>
     <li>ある日付<var>x</var>の混雑度は、<var>S<sub>i</sub></var>個の連休から受ける影響度の中で、もっとも大きい影響度と同じ数値になる。</li>
   </ul>
 ニートくんが出かけようと思える1年の中で一番小さい混雑度を出力してください。
