@@ -179,7 +179,7 @@ void cross_fill(P p){
 				table[y][x]=1;
 			}
 			else if(visited[y][x]) break;
-			else if(s[y][x]=='x'){
+			else if(s[y][x]=='o'){
 				BAD_END();
 			}
 			else break;
