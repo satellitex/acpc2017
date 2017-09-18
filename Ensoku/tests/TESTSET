@@ -15,6 +15,7 @@ cxx_generator(src='gen_O2_killer.cpp')
 ## Input validators.
 #c_validator(src='validator.c')
 cxx_validator(src='validator.cpp')
+cxx_validator(src='validator_2.cpp')
 #java_validator(src='Validator.java', encoding='UTF-8', mainclass='Validator')
 #script_validator(src='validator.py')
 
