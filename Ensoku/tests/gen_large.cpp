@@ -1,25 +1,25 @@
 #include <iostream>
 #include "testlib.h"
 using namespace std;
-#define CASE_NUM 10
+#define CASE_NUM 5
 
 const int MAX_A = 10000;
 const int MAX_B = 1000;
-const int MAX_N = 10;
-const int MAX_K = 100;
+const int MAX_N = 14;
+const int MAX_K = 300;
 const int MAX_a = 1000;
 const int MAX_b = 1000;
 const int MAX_c = 1000;
-const int MAX_d = 20;
+const int MAX_d = 300;
 
 
-const int MIN_A = 8000;
+const int MIN_A = 800;
 const int MIN_B = 800;
-const int MIN_N = 8;
-const int MIN_K = 90;
+const int MIN_N = 10;
+const int MIN_K = 250;
 const int MIN_a = 1;
 const int MIN_b = 1;
-const int MIN_c = 500;
+const int MIN_c = 800;
 const int MIN_d = 0;
 
 void start(int id) {

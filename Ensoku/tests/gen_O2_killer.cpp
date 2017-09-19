@@ -1,25 +1,25 @@
 #include <iostream>
 #include "testlib.h"
 using namespace std;
-#define CASE_NUM 5
+#define CASE_NUM 1
 
-const int MAX_A = 10000;
+const int MAX_A = 1000;
 const int MAX_B = 1000;
-const int MAX_N = 12;
-const int MAX_K = 500;
+const int MAX_N = 14;
+const int MAX_K = 300;
 const int MAX_a = 1;
 const int MAX_b = 1000;
 const int MAX_c = 1000;
-const int MAX_d = 10000;
+const int MAX_d = 0;
 
 const int MIN_A = 1000;
 const int MIN_B = 1000;
-const int MIN_N = 12;
-const int MIN_K = 500;
+const int MIN_N = 14;
+const int MIN_K = 300;
 const int MIN_a = 1;
 const int MIN_b = 1;
 const int MIN_c = 1000;
-const int MIN_d = 1000;
+const int MIN_d = 0;
 
 void start(int id) {
   ofstream out(format("05_O2_killer_%02d.in", id).c_str());
@@ -28,15 +28,17 @@ void start(int id) {
   int B = rnd.next(MIN_B, min(MAX_B,A));
   out<<N<<" "<<A<<" "<<B<<endl;
 
+  int K = rnd.next(MIN_K,MAX_K);
+  int a[K],b[K],c[K];
+  for(int j=0;j<K;j++) {
+    a[j] = rnd.next(MIN_a,MAX_a);
+    b[j] = rnd.next(MIN_b,MAX_b);
+    c[j] = rnd.next(MIN_c,MAX_c);
+  }    
+  
   for(int i = 0; i < N; i++) {
-    int K = rnd.next(MIN_K,MAX_K);
     out << K << endl;
-    for(int j=0;j<K;j++) {
-      int a = rnd.next(MIN_a,MAX_a);
-      int b = rnd.next(MIN_b,MAX_b);
-      int c = rnd.next(MIN_c,MAX_c);
-      out<<a<<" "<<b<<" "<<c<<endl;
-    }
+    for(int j = 0; j < K ;j++) out<<a[j]<<" "<<b[j]<<" "<<c[j]<<endl;
   }
   
   for(int i=0;i<N;i++) {

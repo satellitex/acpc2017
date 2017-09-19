@@ -11,7 +11,7 @@ int main() {
     ll a = n+1;
     ll cnt = 0;
     while(!(a&1)) a >>= 1, cnt++;
-    cout << (a == 1ll ? -1ll : 1ll<<cnt) << endl;
+    cout << (a == 1ll ? n+1ll : 1ll<<cnt) << endl;
   }
   return 0;
 }

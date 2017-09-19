@@ -6,14 +6,16 @@
 cxx_generator(src='gen_small.cpp')
 cxx_generator(src='gen_rand.cpp')
 cxx_generator(src='gen_large.cpp')
-cxx_generator(src='gen_large_corner.cpp')
-#cxx_generator(src='gen_O2_killer.cpp')
+#cxx_generator(src='gen_large_corner.cpp')
+cxx_generator(src='gen_O2_killer.cpp')
+
 #java_generator(src='Generator.java', encoding='UTF-8', mainclass='Generator')
 #script_generator(src='generator.py')
 
 ## Input validators.
 #c_validator(src='validator.c')
 cxx_validator(src='validator.cpp')
+cxx_validator(src='validator_2.cpp')
 #java_validator(src='Validator.java', encoding='UTF-8', mainclass='Validator')
 #script_validator(src='validator.py')
 

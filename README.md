@@ -1,3 +1,5 @@
+# ACPC2017 [![CircleCI](https://circleci.com/gh/satellitex/acpc2017/tree/master.svg?style=shield&circle-token=70b5b30e6f74f12a996aa2fd69abd69f1a01ec19)](https://circleci.com/gh/satellitex/acpc2017/tree/master)
+
 Rime
 ====
 

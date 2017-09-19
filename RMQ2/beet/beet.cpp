@@ -185,7 +185,7 @@ signed main(){
 	assert(c.first==c.second);
       }
     }
-    //*/ 
+    //*/
   }
   return 0;
 }

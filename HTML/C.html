@@ -1,0 +1,91 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem C: Palindrome</h1>
+<h2>Problem</h2>
+<p>
+太郎くんはそれぞれの長さが<var>L</var>の文字列を<var>N</var>個持っている。太郎くんは回文が大好きなので、<var>N</var>個のうちいくつかの文字列を選んで好きな順番に並べることで、できるだけ長い回文を作りたい。
+</p>
+<p>
+太郎くんが作ることのできる回文の中で、最長のものを求めよ。複数ある場合は、そのうち辞書順で最小のものを出力せよ。
+</p>
+<p>
+どのように選んで並べても回文が作れない場合は、空行を出力せよ。
+</p>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+<var>N L</var>
+<var>s<sub>1</sub></var>
+<var>s<sub>2</sub></var>
+.
+.
+.
+<var>s<sub>N</sub></var>
+</pre>
+<p>
+1行目に、文字列の数<var>N</var>と文字列の長さ<var>L</var>が与えられる。
+</p>
+<p> 続く2行目から<var>N</var> &plus; 1行目に文字列が与えられる。
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+    <li>1 &le; <var>N</var> &le; 1000</li>
+    <li>1 &le; <var>L</var> &le; 30</li>
+    <li>sは英小文字からなる文字列である。</li>
+</ul>
+
+<h2>Output</h2>
+<p>
+最長の回文の中で辞書順最小のものを出力せよ。
+</p>
+<p>
+回文が作れない場合は空行を出力せよ。
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+4 2
+oi
+io
+rr
+rr
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+iorrrroi
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+5 1
+a
+b
+c
+a
+c
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+acbca
+</pre>
+
+<h2>Sample Input 3</h2>
+<pre>
+3 3
+uki
+uku
+uke
+</pre>
+
+<h2>Sample Output 3</h2>
+<pre>
+uku
+</pre>

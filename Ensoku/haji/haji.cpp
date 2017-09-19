@@ -1,13 +1,10 @@
 #include <bits/stdc++.h>
 #define int long long
-#define N 12
+#define N 15
 #define MAX_A 10010
 #define MAX_B 1010
 using namespace std;
 const int INF = 1LL<<55;
-const int mod = (1e9)+7;
-const double EPS = 1e-8;
-const double PI = 6.0 * asin(0.5);
 template<class T> T Max(T &a,T b){return a=max(a,b);}
 template<class T> T Min(T &a,T b){return a=min(a,b);}
 int n,A,B;
@@ -47,10 +44,10 @@ void DP2(int dp[MAX_B],vector<dat> store){
     }
 }
 
-int dp3_1[1<<(N/2)][MAX_B];
-int dp3_2[1<<(N/2)][MAX_B];
+int dp3_1[1<<((N+1)/2)][MAX_B];
+int dp3_2[1<<((N+1)/2)][MAX_B];
 void DP3(int dp[1<<(N/2)][MAX_B],int n,int dp2[][MAX_B]){
-  bool used[1<<(N/2)]={};
+  bool used[1<<((N+1)/2)]={};
 
   for(int bit = 0;bit<(1<<n);bit++){
     for(int i=0;i<B;i++) Max(dp[bit][i+1],dp[bit][i]);
@@ -74,6 +71,7 @@ int solve(){
   DP3(dp3_1,n_1,dp2);
   DP3(dp3_2,n_2,&dp2[n_1]);
   
+
   int res = 0;
   for(int i=1;i<(1<<n_1);i+=2)
     for(int j=0;j<(1<<n_2);j++){

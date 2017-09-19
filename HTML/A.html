@@ -1,0 +1,72 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem A: Clock</h1>
+<h2>Problem</h2>
+
+<p>
+がっちょ君はお気に入りの時計を持っている。<br>
+ある日時計の長針が取れてしまい、どこかへなくしてしまった。しかし、がっちょ君はその時計を使い続けたいため短針だけで時刻を読み取りたいと考えている。<br>
+短針の情報<var>&theta;</var>に対する時刻(時<var>h</var>、分<var>m</var>)を出力せよ。<br>
+時計はいわゆるアナログ時計で、1から12の数字が等間隔に昇順に並んでいて、12を一番上として並んでいるものである。<br>
+</p>
+
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+  <var>&theta;</var>
+</pre>
+
+
+<h2>Constraints</h2>
+<p>
+  <ul>
+    <li>角度は度数法(degree)で表される。</li>
+    <li>短針の情報は12を0°として整数で時計回りを正の向きで与えられる。</li>
+    <li>0 &le; <var>&theta;</var> &le; 359</li>
+    </ul>
+</p>
+
+
+<h2>Output</h2>
+<p>
+  短針が与えられた角度をとる時の時刻を<br>
+  <var>h</var> <var>m</var><br>
+  の形で1行に出力する。<br>
+  <br>
+  時刻に午前午後の区別はないため0 &le; <var>h</var> &le; 11とする。<br>
+</p>
+
+
+<h2>Sample Input 1</h2>
+<pre>
+0
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+0 0
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+45
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+1 30
+</pre>
+
+<h2>Sample Input 3</h2>
+<pre>
+100
+</pre>
+
+<h2>Sample Output 3</h2>
+<pre>
+3 20
+</pre>

@@ -1,86 +1,71 @@
 <%@ page pageEncoding="UTF-8"%>
 
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({ tex2jax: { inlineMath: [["$","$"], ["\\(","\\)"]], processEscapes: true }});
+</script>
+
 <script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
 </script>
 
-<h1>Problem H: Making Pairs</h1>
+<h1>Problem H: Sequence</h1>
 
 <h2>Problem</h2>
-<p>
-  招待制の店があって、最初は店主だけがいる。<br>
-  あるタイミングで、店主またはそれまでに招待された人のうち、誰か一人が新規客を招待する。<br>
-  誰かに招待された人は必ず参加する。<br>
-  すでに参加している人を招待することはない。<br>
-  異なる人が同時に招待されることはない。<br>
-  この店では二人組で行う出し物があるが、各人はコミュ障なので、<br>
-  自分が招待した人もしくは自分を招待した人とだけペアを組むことができる。<br>
-  新たに人が招待され参加するたびに、その時点で最大何ペア作ることができるのかを求めたい。<br>
-</p>
-
+<p>項数$L$の等差数列が$N$個ある。$i$番目の等差数列の初項は$a_i$で公差は$d_i$である。1番目の数列から順番に 1番目の数列, 2番目の数列, ………,$N-1$番目の数列, $N$番目の数列と並べ、そうしてできた数列を$A$とした時、$A$から長さ$K$の任意の区間を選んで、新たに数列$B$を作る。数列$B$の和を最大化せよ。</p>
 
 <h2>Input</h2>
 <p>入力は以下の形式で与えられる。</p>
-<pre>
-N
-p<sub>1</sub>
-p<sub>2</sub>
-...
-p<sub>N</sub>
-</pre>
-
-一行目に招待される人数の合計 N が与えられる。<br>
-続く N 行に p<sub>i</sub> 番目に参加した人が i 番目の人を招待したという情報が与えられる。
-( 1 &le; i &le; N )<br>
-ただし、店主は 0 番目に参加した人として扱うこととする。<br>
-
+<p>
+$N$ $L$ $K$<br>
+$a_1$ $d_1$<br>
+$a_2$ $d_2$<br>
+...<br>
+$a_N$ $d_N$<br>
+</p>
+<p>
+    1行目に3つの整数$N, L, K$が空白区切りで与えられる。<br>
+    続く$N$行に、$i$個目の等差数列の情報$a_i$, $d_i$が空白区切りで与えられる。（$1 \leq i \leq N$）
+</p>
 
 <h2>Constraints</h2>
 <p>入力は以下の条件を満たす。</p>
 <ul>
-    <li>1 &le; N &le; 5000</li>
-    <li>0 &le; p<sub>i</sub> &lt; i ( 1 &le; i &le; N )</li>
-    <li>N, p<sub>i</sub> は整数</li>
+    <li>$1 \leq N \leq 10^5$</li>
+    <li>$1 \leq L \leq 10^5$</li>
+    <li>$1 \leq K \leq N\times L$</li>
+    <li>$0 \leq a_i \leq 10^5$</li>
+    <li>$1 \leq d_i \leq 10^3$</li>
+    <li>入力はすべて整数</li>
 </ul>
 
 <h2>Output</h2>
 <p>
-  出力は N 行からなる。<br>
-  i 行目に i 番目の人が参加した時点で最大何ペア作ることができるのかを出力する。
-  ( 1 &le; i  &le; N )<br>
-  出力の最後には改行を入れること。
+    数列$B$の和の最大値を1行に出力する。
 </p>
 
 <h2>Sample Input 1</h2>
 <pre>
-3
-0
-0
-2
+3 3 5
+0 3
+2 2
+4 1
 </pre>
 
 <h2>Sample Output 1</h2>
 <pre>
-1
-1
-2
+25
 </pre>
+
+<p>数列$A$は$0,3,6,2,4,6,4,5,6$となる。この数列の第5項から第9項までを数列$B$とすれば、数列$B$の和は25となり、これが最大である。</p>
 
 <h2>Sample Input 2</h2>
 <pre>
-5
-0
-1
-2
-3
-4
+3 3 5
+0 10
+8 1
+11 1
 </pre>
-
 
 <h2>Sample Output 2</h2>
 <pre>
-1
-1
-2
-2
-3
+58
 </pre>

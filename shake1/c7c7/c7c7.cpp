@@ -10,5 +10,5 @@ main(){
 			return 0;
 		}
 	}
-	cout<<(-1)<<endl;
+	cout<<n+1<<endl;
 }
