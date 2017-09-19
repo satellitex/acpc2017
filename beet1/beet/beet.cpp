@@ -38,16 +38,12 @@ struct BipartiteMatching{
     return false;
   }
 
-  int calc(){
+  int calc(int v){
     int res=0;
     //fill(match.begin(),match.end(),-1);
     fill(used.begin(),used.end(),0);
-    for(int v=0;v<V;v++){
-      if(match[v]<0){
-	if(dfs(v)){
-	  res++;
-	}
-      }
+    if(dfs(v)){
+      res++;
     }
     return res;
   }
@@ -63,7 +59,7 @@ signed main(){
     int p;
     cin>>p;
     bm.add_edge(p,i);
-    ans+=bm.calc();
+    ans+=bm.calc(i);
     cout<<ans<<endl;
   }
   return 0;
